@@ -1,4 +1,4 @@
-package com.example.mvc_kotlin.screens
+package com.example.mvc_kotlin.screens.listview
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,9 +6,16 @@ import android.widget.Toast
 import com.example.mvc_kotlin.common.Constants
 import com.example.mvc_kotlin.networking.StackoverflowApi
 import com.example.mvc_kotlin.questions.Question
+import com.example.mvc_kotlin.screens.QuestionsListViewMvc
+import com.example.mvc_kotlin.screens.listview.QuestionsListViewMvcImpl
 import com.example.mvc_kotlin.screens.common.BaseActivity
 import com.example.mvc_kotlin.screens.common.dialogs.ServerErrorDialogFragment
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -24,7 +31,7 @@ class QuestionsListActivity : BaseActivity(), QuestionsListViewMvc.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mViewMvc = QuestionsListViewMvcImpl(LayoutInflater.from(this),null)
+        mViewMvc = QuestionsListViewMvcImpl(LayoutInflater.from(this), null)
         mViewMvc.registerListener(this)
 
         // init retrofit
@@ -71,7 +78,7 @@ class QuestionsListActivity : BaseActivity(), QuestionsListViewMvc.Listener {
 
     private fun onFetchFailed() {
         supportFragmentManager.beginTransaction()
-                .add(ServerErrorDialogFragment.newInstance(), null)
+                .add(ServerErrorDialogFragment.Companion.newInstance(), null)
                 .commitAllowingStateLoss()
     }
 

@@ -1,4 +1,4 @@
-package com.example.mvc_kotlin.screens
+package com.example.mvc_kotlin.screens.listview
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,6 +8,8 @@ import android.widget.ListView
 import androidx.annotation.IdRes
 import com.example.mvc_kotlin.R
 import com.example.mvc_kotlin.questions.Question
+import com.example.mvc_kotlin.screens.QuestionsListViewMvc
+import com.example.mvc_kotlin.screens.adapter.listview.QuestionsAdapter
 
 class QuestionsListViewMvcImpl(
     layoutInflater: LayoutInflater,
@@ -16,7 +18,7 @@ class QuestionsListViewMvcImpl(
     private var mLstQuestions: ListView
     private var questionsAdapter: QuestionsAdapter
 
-    private val rootView:View = layoutInflater.inflate(R.layout.layout_questions_list,viewGroup,false)
+    private val rootView: View = layoutInflater.inflate(R.layout.layout_questions_list,viewGroup,false)
 
     private val listeners = HashSet<QuestionsListViewMvc.Listener>()
     private val context: Context get() = rootView.context
@@ -27,7 +29,7 @@ class QuestionsListViewMvcImpl(
         mLstQuestions.adapter = questionsAdapter
     }
 
-    override fun getRootView(): View{
+    override fun getRootView(): View {
         return rootView
     }
 

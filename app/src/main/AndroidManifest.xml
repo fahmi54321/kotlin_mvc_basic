@@ -14,7 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mvc_kotlin">
         <activity
-            android:name=".screens.QuestionsListActivity"
+            android:name=".screens.listview.QuestionsListActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".screens.recycler.QuestionsRecyclerListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

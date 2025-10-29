@@ -1,4 +1,4 @@
-package com.example.mvc_kotlin.screens
+package com.example.mvc_kotlin.screens.adapter.listview
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.example.mvc_kotlin.questions.Question
+import com.example.mvc_kotlin.screens.QuestionsListViewItemMvc
+import com.example.mvc_kotlin.screens.QuestionsListViewItemMvcImpl
 
 class QuestionsAdapter(
     context: Context,
