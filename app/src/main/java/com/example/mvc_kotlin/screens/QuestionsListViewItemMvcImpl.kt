@@ -37,7 +37,7 @@ class QuestionsListViewItemMvcImpl(
         return rootView
     }
 
-    override fun registenerlistener(listener: QuestionsListViewItemMvc.Listener) {
+    override fun registerListener(listener: QuestionsListViewItemMvc.Listener) {
         mListeners.add(listener)
     }
 
