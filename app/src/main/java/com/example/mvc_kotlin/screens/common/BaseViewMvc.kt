@@ -1,0 +1,23 @@
+package com.example.mvc_kotlin.screens.common
+
+import android.content.Context
+import android.view.View
+import androidx.annotation.IdRes
+
+open class BaseViewMvc: ViewMvc {
+    private lateinit var rootView: View
+
+    fun setRootView(view: View) {
+        rootView = view
+    }
+
+    override fun getRootView(): View {
+        return rootView
+    }
+
+    protected fun <T: View?> findViewById(@IdRes id: Int) : T{
+        return rootView.findViewById<T>(id)
+    }
+
+    protected val context: Context get() = rootView.context
+}

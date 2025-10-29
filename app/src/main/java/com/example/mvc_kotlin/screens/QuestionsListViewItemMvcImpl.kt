@@ -1,25 +1,24 @@
 package com.example.mvc_kotlin.screens
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.IdRes
 import com.example.mvc_kotlin.R
 import com.example.mvc_kotlin.questions.Question
+import com.example.mvc_kotlin.screens.common.BaseViewMvc
 
 class QuestionsListViewItemMvcImpl(
     layoutInflater: LayoutInflater,
     viewGroup: ViewGroup
-) : QuestionsListViewItemMvc {
+) : BaseViewMvc(), QuestionsListViewItemMvc {
 
-    private val rootView: View = layoutInflater.inflate(R.layout.layout_question_list_item,viewGroup, false)
     private val mListeners = HashSet<QuestionsListViewItemMvc.Listener>(1)
     private var mTxtTitle: TextView
 
     private lateinit var mQuestion: Question
 
     init {
+        setRootView(layoutInflater.inflate(R.layout.layout_question_list_item,viewGroup, false))
         mTxtTitle = findViewById(R.id.txt_title)
 
         getRootView().setOnClickListener {
@@ -29,13 +28,6 @@ class QuestionsListViewItemMvcImpl(
         }
     }
 
-    private fun <T: View?> findViewById(@IdRes id: Int) : T{
-        return rootView.findViewById<T>(id)
-    }
-
-    override fun getRootView(): View {
-        return rootView
-    }
 
     override fun registerListener(listener: QuestionsListViewItemMvc.Listener) {
         mListeners.add(listener)

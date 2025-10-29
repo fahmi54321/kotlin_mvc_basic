@@ -27,7 +27,7 @@ class QuestionsAdapter(
                 LayoutInflater.from(context),
                 parent
             )
-            viewMvc.registenerlistener(this)
+            viewMvc.registerListener(this)
             view = viewMvc.getRootView()
             view.tag = viewMvc
         } else {

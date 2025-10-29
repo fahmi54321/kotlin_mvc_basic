@@ -29,7 +29,7 @@ class QuestionsRecyclerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val viewMvc = QuestionsListViewItemMvcImpl(inflater, parent)
-        viewMvc.registenerlistener(this)
+        viewMvc.registerListener(this)
         return MyViewHolder(viewMvc)
     }
 
