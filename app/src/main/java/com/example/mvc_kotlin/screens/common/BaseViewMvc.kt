@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.View
 import androidx.annotation.IdRes
 
-open class BaseViewMvc: ViewMvc {
+abstract class BaseViewMvc: ViewMvc {
     private lateinit var rootView: View
 
     fun setRootView(view: View) {

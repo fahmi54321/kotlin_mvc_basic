@@ -5,14 +5,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.mvc_kotlin.R
 import com.example.mvc_kotlin.questions.Question
-import com.example.mvc_kotlin.screens.common.BaseViewMvc
+import com.example.mvc_kotlin.screens.common.BaseObservableViewMvc
 
 class QuestionsListViewItemMvcImpl(
     layoutInflater: LayoutInflater,
     viewGroup: ViewGroup
-) : BaseViewMvc(), QuestionsListViewItemMvc {
+) : BaseObservableViewMvc<QuestionsListViewItemMvc.Listener>(), QuestionsListViewItemMvc {
 
-    private val mListeners = HashSet<QuestionsListViewItemMvc.Listener>(1)
     private var mTxtTitle: TextView
 
     private lateinit var mQuestion: Question
@@ -22,19 +21,10 @@ class QuestionsListViewItemMvcImpl(
         mTxtTitle = findViewById(R.id.txt_title)
 
         getRootView().setOnClickListener {
-            for(listener in mListeners){
+            for(listener in getListeners){
                 listener.onQuestionClicked(mQuestion)
             }
         }
-    }
-
-
-    override fun registerListener(listener: QuestionsListViewItemMvc.Listener) {
-        mListeners.add(listener)
-    }
-
-    override fun unregisterListener(listener: QuestionsListViewItemMvc.Listener) {
-        mListeners.remove(listener)
     }
 
     override fun bindQuestion(question: Question) {
