@@ -23,11 +23,11 @@ class QuestionsRecyclerListActivity : BaseActivity(), QuestionsListViewMvc.Liste
 
     private var isDataLoaded = false
 
-    private lateinit var mViewMvc: QuestionsRecyclerMvcImpl
+    private lateinit var mViewMvc: QuestionsListViewMvc
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mViewMvc = QuestionsRecyclerMvcImpl(LayoutInflater.from(this), null)
+        mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionsRecyclerMvc(null)
         mViewMvc.registerListener(this)
 
         // init retrofit
