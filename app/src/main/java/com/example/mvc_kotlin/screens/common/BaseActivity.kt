@@ -2,10 +2,18 @@ package com.example.mvc_kotlin.screens.common
 
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mvc_kotlin.CustomApplication
-import com.example.mvc_kotlin.common.CompositionRoot
+import com.example.mvc_kotlin.common.dependencyinjection.ControllerCompositionRoot
 
 open class BaseActivity: AppCompatActivity() {
-    protected fun getCompositionRoot(): CompositionRoot{
-        return (application as CustomApplication).getCompositionRoot()
+
+    private var controllerCompositionRoot: ControllerCompositionRoot? = null
+    protected fun getCompositionRoot(): ControllerCompositionRoot{
+        if(controllerCompositionRoot == null){
+            controllerCompositionRoot = ControllerCompositionRoot(
+                ((application) as CustomApplication).getCompositionRoot(),
+                this
+            )
+        }
+        return controllerCompositionRoot!!
     }
 }

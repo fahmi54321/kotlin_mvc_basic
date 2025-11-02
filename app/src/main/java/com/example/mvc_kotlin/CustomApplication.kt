@@ -1,7 +1,7 @@
 package com.example.mvc_kotlin
 
 import android.app.Application
-import com.example.mvc_kotlin.common.CompositionRoot
+import com.example.mvc_kotlin.common.dependencyinjection.CompositionRoot
 
 class CustomApplication: Application() {
 
