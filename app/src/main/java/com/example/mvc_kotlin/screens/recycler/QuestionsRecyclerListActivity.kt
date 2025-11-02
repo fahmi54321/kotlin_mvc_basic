@@ -3,7 +3,6 @@ package com.example.mvc_kotlin.screens.recycler
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
-import com.example.mvc_kotlin.common.Constants
 import com.example.mvc_kotlin.networking.StackoverflowApi
 import com.example.mvc_kotlin.questions.Question
 import com.example.mvc_kotlin.screens.QuestionsListViewMvc
@@ -15,8 +14,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class QuestionsRecyclerListActivity : BaseActivity(), QuestionsListViewMvc.Listener {
 
@@ -34,11 +31,7 @@ class QuestionsRecyclerListActivity : BaseActivity(), QuestionsListViewMvc.Liste
         mViewMvc.registerListener(this)
 
         // init retrofit
-        val retrofit = Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        stackoverflowApi = retrofit.create(StackoverflowApi::class.java)
+        stackoverflowApi = getCompositionRoot().getStackoveflowApi()
 
         setContentView(mViewMvc.getRootView())
     }

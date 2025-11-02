@@ -35,11 +35,7 @@ class QuestionsListActivity : BaseActivity(), QuestionsListViewMvc.Listener {
         mViewMvc.registerListener(this)
 
         // init retrofit
-        val retrofit = Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        stackoverflowApi = retrofit.create(StackoverflowApi::class.java)
+        stackoverflowApi = getCompositionRoot().getStackoveflowApi()
 
         setContentView(mViewMvc.getRootView())
     }
