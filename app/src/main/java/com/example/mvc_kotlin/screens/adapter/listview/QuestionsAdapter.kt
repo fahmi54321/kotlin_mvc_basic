@@ -1,17 +1,17 @@
 package com.example.mvc_kotlin.screens.adapter.listview
 
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.example.mvc_kotlin.questions.Question
 import com.example.mvc_kotlin.screens.QuestionsListViewItemMvc
-import com.example.mvc_kotlin.screens.QuestionsListViewItemMvcImpl
+import com.example.mvc_kotlin.screens.common.ViewMvcFactory
 
 class QuestionsAdapter(
-    context: Context,
-    private val onQuestionClickListener: OnQuestionClickListener
+    private val context: Context,
+    private val onQuestionClickListener: OnQuestionClickListener,
+    private val viewMvcFactory: ViewMvcFactory
 ) : ArrayAdapter<Question>(context, 0), QuestionsListViewItemMvc.Listener {
 
     interface OnQuestionClickListener {
@@ -20,18 +20,17 @@ class QuestionsAdapter(
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
-        val viewMvc: QuestionsListViewItemMvcImpl
+        val viewMvc: QuestionsListViewItemMvc
 
         if (view == null) {
-            viewMvc = QuestionsListViewItemMvcImpl(
-                LayoutInflater.from(context),
+            viewMvc = viewMvcFactory.getQuestionsListViewItemMvc(
                 parent
             )
             viewMvc.registerListener(this)
             view = viewMvc.getRootView()
             view.tag = viewMvc
         } else {
-            viewMvc = view.tag as QuestionsListViewItemMvcImpl
+            viewMvc = view.tag as QuestionsListViewItemMvc
         }
 
         val question = getItem(position)

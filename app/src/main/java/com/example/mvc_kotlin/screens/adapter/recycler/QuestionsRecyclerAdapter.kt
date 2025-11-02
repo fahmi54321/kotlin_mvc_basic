@@ -1,15 +1,14 @@
 package com.example.mvc_kotlin.screens.adapter.recycler
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvc_kotlin.questions.Question
 import com.example.mvc_kotlin.screens.QuestionsListViewItemMvc
-import com.example.mvc_kotlin.screens.QuestionsListViewItemMvcImpl
+import com.example.mvc_kotlin.screens.common.ViewMvcFactory
 
 class QuestionsRecyclerAdapter(
-    private val inflater: LayoutInflater,
-    private val listener: Listener
+    private val listener: Listener,
+    private val viewMvcFactory: ViewMvcFactory,
 ) : RecyclerView.Adapter<QuestionsRecyclerAdapter.MyViewHolder>(),
     QuestionsListViewItemMvc.Listener {
 
@@ -28,7 +27,7 @@ class QuestionsRecyclerAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val viewMvc = QuestionsListViewItemMvcImpl(inflater, parent)
+        val viewMvc = viewMvcFactory.getQuestionsListViewItemMvc(parent)
         viewMvc.registerListener(this)
         return MyViewHolder(viewMvc)
     }

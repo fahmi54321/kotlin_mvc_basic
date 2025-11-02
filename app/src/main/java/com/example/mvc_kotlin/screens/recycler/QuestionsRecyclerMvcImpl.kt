@@ -9,10 +9,12 @@ import com.example.mvc_kotlin.questions.Question
 import com.example.mvc_kotlin.screens.QuestionsListViewMvc
 import com.example.mvc_kotlin.screens.adapter.recycler.QuestionsRecyclerAdapter
 import com.example.mvc_kotlin.screens.common.BaseObservableViewMvc
+import com.example.mvc_kotlin.screens.common.ViewMvcFactory
 
 class QuestionsRecyclerMvcImpl(
     layoutInflater: LayoutInflater,
-    viewGroup: ViewGroup?
+    viewGroup: ViewGroup?,
+    viewMvcFactory: ViewMvcFactory,
 ): BaseObservableViewMvc<QuestionsListViewMvc.Listener>(), QuestionsRecyclerAdapter.Listener, QuestionsListViewMvc {
 
     private var mRecyclerQuestions: RecyclerView
@@ -22,7 +24,7 @@ class QuestionsRecyclerMvcImpl(
         setRootView(layoutInflater.inflate(R.layout.layout_questions_list_recycler,viewGroup,false))
         mRecyclerQuestions = findViewById(R.id.recycler_questions)
         mRecyclerQuestions.layoutManager = LinearLayoutManager(context)
-        mAdapter = QuestionsRecyclerAdapter(layoutInflater, this)
+        mAdapter = QuestionsRecyclerAdapter( this, viewMvcFactory)
         mRecyclerQuestions.adapter = mAdapter
     }
 

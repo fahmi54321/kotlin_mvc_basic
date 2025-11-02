@@ -8,10 +8,12 @@ import com.example.mvc_kotlin.questions.Question
 import com.example.mvc_kotlin.screens.QuestionsListViewMvc
 import com.example.mvc_kotlin.screens.adapter.listview.QuestionsAdapter
 import com.example.mvc_kotlin.screens.common.BaseObservableViewMvc
+import com.example.mvc_kotlin.screens.common.ViewMvcFactory
 
 class QuestionsListViewMvcImpl(
     layoutInflater: LayoutInflater,
     viewGroup: ViewGroup?,
+    viewMvcFactory: ViewMvcFactory
 ) : BaseObservableViewMvc<QuestionsListViewMvc.Listener>(), QuestionsAdapter.OnQuestionClickListener, QuestionsListViewMvc {
     private var mLstQuestions: ListView
     private var questionsAdapter: QuestionsAdapter
@@ -20,7 +22,7 @@ class QuestionsListViewMvcImpl(
     init {
         setRootView(layoutInflater.inflate(R.layout.layout_questions_list,viewGroup,false))
         mLstQuestions = findViewById(R.id.lst_questions)
-        questionsAdapter = QuestionsAdapter(context, this)
+        questionsAdapter = QuestionsAdapter(context, this,viewMvcFactory)
         mLstQuestions.adapter = questionsAdapter
     }
 
