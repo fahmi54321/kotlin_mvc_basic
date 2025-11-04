@@ -3,6 +3,7 @@ package com.example.mvc_kotlin.common.dependencyinjection
 import android.app.Activity
 import android.view.LayoutInflater
 import com.example.mvc_kotlin.networking.StackoverflowApi
+import com.example.mvc_kotlin.questions.FetchQuestionDetailsUseCase
 import com.example.mvc_kotlin.screens.common.ViewMvcFactory
 
 class ControllerCompositionRoot(
@@ -20,6 +21,10 @@ class ControllerCompositionRoot(
 
     fun getViewMvcFactory(): ViewMvcFactory{
         return ViewMvcFactory(getLayoutInflater())
+    }
+
+    fun getFetchQuestionDetailsUseCase(): FetchQuestionDetailsUseCase {
+        return FetchQuestionDetailsUseCase(getStackoveflowApi())
     }
 
 }

@@ -8,16 +8,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.mvc_kotlin.R
-import com.example.mvc_kotlin.networking.StackoverflowApi
+import com.example.mvc_kotlin.questions.FetchQuestionDetailsUseCase
 import com.example.mvc_kotlin.questions.QuestionDetails
 import com.example.mvc_kotlin.screens.common.BaseActivity
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-class QuestionDetailsActivity : BaseActivity() {
+class QuestionDetailsActivity : BaseActivity(), FetchQuestionDetailsUseCase.Listener {
     companion object {
         const val EXTRA_QUESTION_ID = "EXTRA_QUESTION_ID"
         fun start(context: Context, questionId: String) {
@@ -29,12 +28,13 @@ class QuestionDetailsActivity : BaseActivity() {
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private lateinit var stackoverflowApi: StackoverflowApi
     private lateinit var mViewMvc: QuestionDetailsViewMvc
+
+    private lateinit var fetchQuestionDetailsUseCase: FetchQuestionDetailsUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        stackoverflowApi = getCompositionRoot().getStackoveflowApi()
+        fetchQuestionDetailsUseCase = getCompositionRoot().getFetchQuestionDetailsUseCase()
         mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionDetailsViewMvc(null)
 
         enableEdgeToEdge()
@@ -48,24 +48,19 @@ class QuestionDetailsActivity : BaseActivity() {
 
     override fun onStart() {
         super.onStart()
+        fetchQuestionDetailsUseCase.registerListener(this)
         mViewMvc.showProgressIndication()
         fetchQuestionDetails()
     }
 
+    override fun onStop() {
+        super.onStop()
+        fetchQuestionDetailsUseCase.unregisterListener(this)
+    }
+
     private fun fetchQuestionDetails(){
         coroutineScope.launch {
-            try {
-                val response = stackoverflowApi.questionDetails(getQuestionId())
-                if (response.isSuccessful && response.body() != null) {
-                    bindQuestionDetails(response.body()?.question)
-                } else {
-                    networkCallFailed()
-                }
-            } catch (t: Throwable) {
-                if (t !is CancellationException) {
-                    networkCallFailed()
-                }
-            }
+            fetchQuestionDetailsUseCase.fetchQuestionDetailsAndNotify(getQuestionId())
         }
     }
 
@@ -73,14 +68,13 @@ class QuestionDetailsActivity : BaseActivity() {
         return intent.getStringExtra(EXTRA_QUESTION_ID)?:""
     }
 
-    private fun bindQuestionDetails(question: QuestionDetails?){
+
+    override fun onQuestionDetailsFetched(question: QuestionDetails) {
         mViewMvc.hideProgressIndication()
-        if(question != null){
-            mViewMvc.bindQuestion(question)
-        }
+        mViewMvc.bindQuestion(question)
     }
 
-    private fun networkCallFailed(){
+    override fun onQuestionDetailsFetchFailed() {
         mViewMvc.hideProgressIndication()
         Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
     }
