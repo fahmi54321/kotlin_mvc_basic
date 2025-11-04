@@ -8,6 +8,7 @@ import com.example.mvc_kotlin.questions.Question
 import com.example.mvc_kotlin.screens.QuestionsListViewMvc
 import com.example.mvc_kotlin.screens.common.BaseActivity
 import com.example.mvc_kotlin.screens.common.dialogs.ServerErrorDialogFragment
+import com.example.mvc_kotlin.screens.questiondetails.QuestionDetailsActivity
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -76,6 +77,6 @@ class QuestionsRecyclerListActivity : BaseActivity(), QuestionsListViewMvc.Liste
 
 
     override fun onQuestionClicked(question: Question) {
-        Toast.makeText(this, question.title, Toast.LENGTH_SHORT).show()
+        QuestionDetailsActivity.start(this, question.id)
     }
 }

@@ -1,23 +1,18 @@
 package com.example.mvc_kotlin.screens.listview
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.widget.Toast
-import com.example.mvc_kotlin.common.Constants
 import com.example.mvc_kotlin.networking.StackoverflowApi
 import com.example.mvc_kotlin.questions.Question
 import com.example.mvc_kotlin.screens.QuestionsListViewMvc
-import com.example.mvc_kotlin.screens.listview.QuestionsListViewMvcImpl
 import com.example.mvc_kotlin.screens.common.BaseActivity
 import com.example.mvc_kotlin.screens.common.dialogs.ServerErrorDialogFragment
+import com.example.mvc_kotlin.screens.questiondetails.QuestionDetailsActivity
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class QuestionsListActivity : BaseActivity(), QuestionsListViewMvc.Listener {
 
@@ -80,6 +75,6 @@ class QuestionsListActivity : BaseActivity(), QuestionsListViewMvc.Listener {
 
 
     override fun onQuestionClicked(question: Question) {
-        Toast.makeText(this, question.title, Toast.LENGTH_SHORT).show()
+        QuestionDetailsActivity.start(this, question.id)
     }
 }
