@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.LayoutInflater
 import com.example.mvc_kotlin.networking.StackoverflowApi
 import com.example.mvc_kotlin.questions.FetchQuestionDetailsUseCase
+import com.example.mvc_kotlin.questions.FetchQuestionListUseCase
 import com.example.mvc_kotlin.screens.common.ViewMvcFactory
 
 class ControllerCompositionRoot(
@@ -25,6 +26,10 @@ class ControllerCompositionRoot(
 
     fun getFetchQuestionDetailsUseCase(): FetchQuestionDetailsUseCase {
         return FetchQuestionDetailsUseCase(getStackoveflowApi())
+    }
+
+    fun getFetchQuestionListUseCase(): FetchQuestionListUseCase {
+        return FetchQuestionListUseCase(getStackoveflowApi())
     }
 
 }

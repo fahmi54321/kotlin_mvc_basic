@@ -1,26 +1,24 @@
 package com.example.mvc_kotlin.screens.listview
 
 import android.os.Bundle
-import com.example.mvc_kotlin.networking.StackoverflowApi
+import android.widget.Toast
+import com.example.mvc_kotlin.questions.FetchQuestionListUseCase
 import com.example.mvc_kotlin.questions.Question
 import com.example.mvc_kotlin.screens.QuestionsListViewMvc
 import com.example.mvc_kotlin.screens.common.BaseActivity
-import com.example.mvc_kotlin.screens.common.dialogs.ServerErrorDialogFragment
 import com.example.mvc_kotlin.screens.questiondetails.QuestionDetailsActivity
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 
-class QuestionsListActivity : BaseActivity(), QuestionsListViewMvc.Listener {
+class QuestionsListActivity : BaseActivity(), QuestionsListViewMvc.Listener,
+    FetchQuestionListUseCase.Listener {
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private lateinit var stackoverflowApi: StackoverflowApi
-
-    private var isDataLoaded = false
+    private lateinit var fetchQuestionListUseCase: FetchQuestionListUseCase
 
     private lateinit var mViewMvc: QuestionsListViewMvc
 
@@ -29,52 +27,42 @@ class QuestionsListActivity : BaseActivity(), QuestionsListViewMvc.Listener {
         mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionsListViewMvc(null)
         mViewMvc.registerListener(this)
 
-        // init retrofit
-        stackoverflowApi = getCompositionRoot().getStackoveflowApi()
+        fetchQuestionListUseCase = getCompositionRoot().getFetchQuestionListUseCase()
 
         setContentView(mViewMvc.getRootView())
     }
 
     override fun onStart() {
         super.onStart()
-        if (!isDataLoaded) {
-            fetchQuestions()
-        }
+        fetchQuestionListUseCase.registerListener(this)
+        fetchQuestions()
     }
 
     override fun onStop() {
         super.onStop()
-        mViewMvc.unregisterListener(this)
+        fetchQuestionListUseCase.unregisterListener(this)
         coroutineScope.coroutineContext.cancelChildren()
     }
 
     private fun fetchQuestions() {
-        coroutineScope.launch {
-            try {
-                val response = stackoverflowApi.lastActiveQuestions(20)
-                if (response.isSuccessful && response.body() != null) {
-                    mViewMvc.bindQuestions(response.body()!!.questions)
-                    isDataLoaded = true
-                } else {
-                    onFetchFailed()
-                }
-            } catch (t: Throwable) {
-                if (t !is CancellationException) {
-                    onFetchFailed()
-                }
-            } finally {
-            }
-        }
-    }
+        mViewMvc.showProgressIndication()
 
-    private fun onFetchFailed() {
-        supportFragmentManager.beginTransaction()
-                .add(ServerErrorDialogFragment.Companion.newInstance(), null)
-                .commitAllowingStateLoss()
+        coroutineScope.launch {
+            fetchQuestionListUseCase.fetchQuestionsAndNotify()
+        }
     }
 
 
     override fun onQuestionClicked(question: Question) {
         QuestionDetailsActivity.start(this, question.id)
+    }
+
+    override fun onQuestionFetchFailed() {
+        Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onQuestionFetched(questions: List<Question>) {
+        mViewMvc.bindQuestions(questions)
+        mViewMvc.hideProgressIndication()
     }
 }

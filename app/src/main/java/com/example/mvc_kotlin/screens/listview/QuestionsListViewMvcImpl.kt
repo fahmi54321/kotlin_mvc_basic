@@ -1,8 +1,10 @@
 package com.example.mvc_kotlin.screens.listview
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import android.widget.ProgressBar
 import com.example.mvc_kotlin.R
 import com.example.mvc_kotlin.questions.Question
 import com.example.mvc_kotlin.screens.QuestionsListViewMvc
@@ -18,10 +20,13 @@ class QuestionsListViewMvcImpl(
     private var mLstQuestions: ListView
     private var questionsAdapter: QuestionsAdapter
 
+    private var progress: ProgressBar
+
 
     init {
         setRootView(layoutInflater.inflate(R.layout.layout_questions_list,viewGroup,false))
         mLstQuestions = findViewById(R.id.lst_questions)
+        progress = findViewById(R.id.progress)
         questionsAdapter = QuestionsAdapter(context, this,viewMvcFactory)
         mLstQuestions.adapter = questionsAdapter
     }
@@ -36,5 +41,13 @@ class QuestionsListViewMvcImpl(
         for (listener in getListeners){
             listener.onQuestionClicked(question)
         }
+    }
+
+    override fun showProgressIndication() {
+        progress.visibility = View.VISIBLE
+    }
+
+    override fun hideProgressIndication() {
+        progress.visibility = View.GONE
     }
 }
