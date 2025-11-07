@@ -1,4 +1,4 @@
-package com.example.mvc_kotlin
+package com.example.mvc_kotlin.common
 
 import android.app.Application
 import com.example.mvc_kotlin.common.dependencyinjection.CompositionRoot
@@ -12,7 +12,7 @@ class CustomApplication: Application() {
         compositionRoot = CompositionRoot()
     }
 
-    fun getCompositionRoot(): CompositionRoot{
+    fun getCompositionRoot(): CompositionRoot {
         return compositionRoot
     }
 }

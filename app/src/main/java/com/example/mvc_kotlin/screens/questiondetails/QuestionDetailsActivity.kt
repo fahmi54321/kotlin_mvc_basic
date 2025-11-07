@@ -10,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.mvc_kotlin.R
 import com.example.mvc_kotlin.questions.FetchQuestionDetailsUseCase
 import com.example.mvc_kotlin.questions.QuestionDetails
-import com.example.mvc_kotlin.screens.common.BaseActivity
+import com.example.mvc_kotlin.screens.common.controller.BaseActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

@@ -1,7 +1,7 @@
 package com.example.mvc_kotlin.screens.questiondetails
 
 import com.example.mvc_kotlin.questions.QuestionDetails
-import com.example.mvc_kotlin.screens.common.ViewMvc
+import com.example.mvc_kotlin.screens.common.views.ViewMvc
 
 interface QuestionDetailsViewMvc: ViewMvc {
     fun bindQuestion(question: QuestionDetails)

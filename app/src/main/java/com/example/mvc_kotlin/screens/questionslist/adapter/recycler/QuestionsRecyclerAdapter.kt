@@ -1,9 +1,9 @@
-package com.example.mvc_kotlin.screens.adapter.recycler
+package com.example.mvc_kotlin.screens.questionslist.adapter.recycler
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvc_kotlin.questions.Question
-import com.example.mvc_kotlin.screens.QuestionsListViewItemMvc
+import com.example.mvc_kotlin.screens.questionslist.QuestionsListViewItemMvc
 import com.example.mvc_kotlin.screens.common.ViewMvcFactory
 
 class QuestionsRecyclerAdapter(

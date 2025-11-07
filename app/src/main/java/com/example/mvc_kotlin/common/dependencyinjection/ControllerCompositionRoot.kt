@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import com.example.mvc_kotlin.networking.StackoverflowApi
 import com.example.mvc_kotlin.questions.FetchQuestionDetailsUseCase
 import com.example.mvc_kotlin.questions.FetchQuestionListUseCase
-import com.example.mvc_kotlin.screens.QuestionsListController
-import com.example.mvc_kotlin.screens.common.MessagesDisplayer
-import com.example.mvc_kotlin.screens.common.ScreensNavigator
+import com.example.mvc_kotlin.screens.questionslist.QuestionsListController
+import com.example.mvc_kotlin.screens.common.toasthelper.ToastHelper
+import com.example.mvc_kotlin.screens.common.screensnavigator.ScreensNavigator
 import com.example.mvc_kotlin.screens.common.ViewMvcFactory
 
 class ControllerCompositionRoot(
@@ -48,8 +48,8 @@ class ControllerCompositionRoot(
         return ScreensNavigator(activity)
     }
 
-    private fun getMessagesDisplayer(): MessagesDisplayer{
-        return MessagesDisplayer(getContext())
+    private fun getMessagesDisplayer(): ToastHelper{
+        return ToastHelper(getContext())
     }
 
     private fun getContext(): Context{

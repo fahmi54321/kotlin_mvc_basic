@@ -1,8 +1,8 @@
-package com.example.mvc_kotlin.screens.recycler
+package com.example.mvc_kotlin.screens.questionslist.recycler
 
 import android.os.Bundle
-import com.example.mvc_kotlin.screens.QuestionsListController
-import com.example.mvc_kotlin.screens.common.BaseActivity
+import com.example.mvc_kotlin.screens.questionslist.QuestionsListController
+import com.example.mvc_kotlin.screens.common.controller.BaseActivity
 
 class QuestionsRecyclerListActivity : BaseActivity() {
 

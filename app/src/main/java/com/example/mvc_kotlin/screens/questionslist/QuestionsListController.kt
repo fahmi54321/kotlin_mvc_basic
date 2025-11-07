@@ -1,9 +1,9 @@
-package com.example.mvc_kotlin.screens
+package com.example.mvc_kotlin.screens.questionslist
 
 import com.example.mvc_kotlin.questions.FetchQuestionListUseCase
 import com.example.mvc_kotlin.questions.Question
-import com.example.mvc_kotlin.screens.common.MessagesDisplayer
-import com.example.mvc_kotlin.screens.common.ScreensNavigator
+import com.example.mvc_kotlin.screens.common.toasthelper.ToastHelper
+import com.example.mvc_kotlin.screens.common.screensnavigator.ScreensNavigator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class QuestionsListController(
     val fetchQuestionListUseCase: FetchQuestionListUseCase,
-    val messagesDisplayer: MessagesDisplayer,
+    val toastHelper: ToastHelper,
     val screensNavigator: ScreensNavigator
 ): QuestionsListViewMvc.Listener, FetchQuestionListUseCase.Listener {
 
@@ -49,7 +49,7 @@ class QuestionsListController(
     }
 
     override fun onQuestionFetchFailed() {
-        messagesDisplayer.showUseCaseError()
+        toastHelper.showUseCaseError()
     }
 
     override fun onQuestionFetched(questions: List<Question>) {

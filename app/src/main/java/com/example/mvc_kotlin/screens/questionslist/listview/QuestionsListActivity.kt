@@ -1,9 +1,9 @@
-package com.example.mvc_kotlin.screens.listview
+package com.example.mvc_kotlin.screens.questionslist.listview
 
 import android.os.Bundle
-import com.example.mvc_kotlin.screens.QuestionsListController
-import com.example.mvc_kotlin.screens.QuestionsListViewMvc
-import com.example.mvc_kotlin.screens.common.BaseActivity
+import com.example.mvc_kotlin.screens.questionslist.QuestionsListController
+import com.example.mvc_kotlin.screens.questionslist.QuestionsListViewMvc
+import com.example.mvc_kotlin.screens.common.controller.BaseActivity
 
 class QuestionsListActivity : BaseActivity() {
     private lateinit var questionsListController: QuestionsListController

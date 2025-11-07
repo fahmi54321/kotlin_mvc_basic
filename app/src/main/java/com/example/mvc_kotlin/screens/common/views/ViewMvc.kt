@@ -1,4 +1,4 @@
-package com.example.mvc_kotlin.screens.common
+package com.example.mvc_kotlin.screens.common.views
 
 import android.view.View
 

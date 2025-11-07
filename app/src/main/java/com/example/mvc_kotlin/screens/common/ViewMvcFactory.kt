@@ -2,13 +2,13 @@ package com.example.mvc_kotlin.screens.common
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.example.mvc_kotlin.screens.QuestionsListViewItemMvc
-import com.example.mvc_kotlin.screens.QuestionsListViewItemMvcImpl
-import com.example.mvc_kotlin.screens.QuestionsListViewMvc
-import com.example.mvc_kotlin.screens.listview.QuestionsListViewMvcImpl
+import com.example.mvc_kotlin.screens.questionslist.QuestionsListViewItemMvc
+import com.example.mvc_kotlin.screens.questionslist.QuestionsListViewItemMvcImpl
+import com.example.mvc_kotlin.screens.questionslist.QuestionsListViewMvc
+import com.example.mvc_kotlin.screens.questionslist.listview.QuestionsListViewMvcImpl
 import com.example.mvc_kotlin.screens.questiondetails.QuestionDetailsViewMvc
 import com.example.mvc_kotlin.screens.questiondetails.QuestionDetailsViewMvcImpl
-import com.example.mvc_kotlin.screens.recycler.QuestionsRecyclerMvcImpl
+import com.example.mvc_kotlin.screens.questionslist.recycler.QuestionsRecyclerMvcImpl
 
 class ViewMvcFactory(
     val layoutInflater: LayoutInflater

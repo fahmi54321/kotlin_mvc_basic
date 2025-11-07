@@ -1,9 +1,9 @@
-package com.example.mvc_kotlin.screens.common
+package com.example.mvc_kotlin.screens.common.toasthelper
 
 import android.content.Context
 import android.widget.Toast
 
-class MessagesDisplayer(
+class ToastHelper(
     val context: Context
 ) {
     fun showUseCaseError(){

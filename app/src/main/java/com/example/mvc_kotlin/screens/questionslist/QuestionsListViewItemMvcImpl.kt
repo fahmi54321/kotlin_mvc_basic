@@ -1,11 +1,11 @@
-package com.example.mvc_kotlin.screens
+package com.example.mvc_kotlin.screens.questionslist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.mvc_kotlin.R
 import com.example.mvc_kotlin.questions.Question
-import com.example.mvc_kotlin.screens.common.BaseObservableViewMvc
+import com.example.mvc_kotlin.screens.common.views.BaseObservableViewMvc
 
 class QuestionsListViewItemMvcImpl(
     layoutInflater: LayoutInflater,

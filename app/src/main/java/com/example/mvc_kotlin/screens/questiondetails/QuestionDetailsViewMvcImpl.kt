@@ -8,7 +8,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.example.mvc_kotlin.R
 import com.example.mvc_kotlin.questions.QuestionDetails
-import com.example.mvc_kotlin.screens.common.BaseViewMvc
+import com.example.mvc_kotlin.screens.common.views.BaseViewMvc
 
 class QuestionDetailsViewMvcImpl(
     layoutInflater: LayoutInflater,

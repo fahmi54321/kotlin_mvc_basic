@@ -1,6 +1,8 @@
 package com.example.mvc_kotlin.networking
 
 import com.example.mvc_kotlin.common.Constants
+import com.example.mvc_kotlin.networking.questions.QuestionsListResponseSchema
+import com.example.mvc_kotlin.networking.questions.SingleQuestionResponseSchema
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

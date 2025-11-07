@@ -1,4 +1,4 @@
-package com.example.mvc_kotlin.screens.listview
+package com.example.mvc_kotlin.screens.questionslist.listview
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +7,9 @@ import android.widget.ListView
 import android.widget.ProgressBar
 import com.example.mvc_kotlin.R
 import com.example.mvc_kotlin.questions.Question
-import com.example.mvc_kotlin.screens.QuestionsListViewMvc
-import com.example.mvc_kotlin.screens.adapter.listview.QuestionsAdapter
-import com.example.mvc_kotlin.screens.common.BaseObservableViewMvc
+import com.example.mvc_kotlin.screens.questionslist.QuestionsListViewMvc
+import com.example.mvc_kotlin.screens.questionslist.adapter.listview.QuestionsAdapter
+import com.example.mvc_kotlin.screens.common.views.BaseObservableViewMvc
 import com.example.mvc_kotlin.screens.common.ViewMvcFactory
 
 class QuestionsListViewMvcImpl(

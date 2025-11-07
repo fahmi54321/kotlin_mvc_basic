@@ -1,11 +1,11 @@
-package com.example.mvc_kotlin.screens.adapter.listview
+package com.example.mvc_kotlin.screens.questionslist.adapter.listview
 
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.example.mvc_kotlin.questions.Question
-import com.example.mvc_kotlin.screens.QuestionsListViewItemMvc
+import com.example.mvc_kotlin.screens.questionslist.QuestionsListViewItemMvc
 import com.example.mvc_kotlin.screens.common.ViewMvcFactory
 
 class QuestionsAdapter(

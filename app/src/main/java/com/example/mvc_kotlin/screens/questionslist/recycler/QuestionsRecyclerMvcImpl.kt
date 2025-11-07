@@ -1,4 +1,4 @@
-package com.example.mvc_kotlin.screens.recycler
+package com.example.mvc_kotlin.screens.questionslist.recycler
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvc_kotlin.R
 import com.example.mvc_kotlin.questions.Question
-import com.example.mvc_kotlin.screens.QuestionsListViewMvc
-import com.example.mvc_kotlin.screens.adapter.recycler.QuestionsRecyclerAdapter
-import com.example.mvc_kotlin.screens.common.BaseObservableViewMvc
+import com.example.mvc_kotlin.screens.questionslist.QuestionsListViewMvc
+import com.example.mvc_kotlin.screens.questionslist.adapter.recycler.QuestionsRecyclerAdapter
+import com.example.mvc_kotlin.screens.common.views.BaseObservableViewMvc
 import com.example.mvc_kotlin.screens.common.ViewMvcFactory
 
 class QuestionsRecyclerMvcImpl(
