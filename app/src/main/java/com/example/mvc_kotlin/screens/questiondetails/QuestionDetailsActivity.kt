@@ -16,7 +16,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-class QuestionDetailsActivity : BaseActivity(), FetchQuestionDetailsUseCase.Listener {
+class QuestionDetailsActivity : BaseActivity(), FetchQuestionDetailsUseCase.Listener,
+    QuestionDetailsViewMvc.Listener {
     companion object {
         const val EXTRA_QUESTION_ID = "EXTRA_QUESTION_ID"
         fun start(context: Context, questionId: String) {
@@ -48,6 +49,7 @@ class QuestionDetailsActivity : BaseActivity(), FetchQuestionDetailsUseCase.List
 
     override fun onStart() {
         super.onStart()
+        mViewMvc.registerListener(this)
         fetchQuestionDetailsUseCase.registerListener(this)
         mViewMvc.showProgressIndication()
         fetchQuestionDetails()
@@ -55,6 +57,7 @@ class QuestionDetailsActivity : BaseActivity(), FetchQuestionDetailsUseCase.List
 
     override fun onStop() {
         super.onStop()
+        mViewMvc.unregisterListener(this)
         fetchQuestionDetailsUseCase.unregisterListener(this)
     }
 
@@ -77,5 +80,9 @@ class QuestionDetailsActivity : BaseActivity(), FetchQuestionDetailsUseCase.List
     override fun onQuestionDetailsFetchFailed() {
         mViewMvc.hideProgressIndication()
         Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onNavigateUpClicked() {
+        onBackPressed()
     }
 }

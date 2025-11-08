@@ -2,6 +2,7 @@ package com.example.mvc_kotlin.screens.common
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.example.mvc_kotlin.screens.common.toolbar.ToolbarViewMvc
 import com.example.mvc_kotlin.screens.questionslist.QuestionsListViewItemMvc
 import com.example.mvc_kotlin.screens.questionslist.QuestionsListViewItemMvcImpl
 import com.example.mvc_kotlin.screens.questionslist.QuestionsListViewMvc
@@ -26,6 +27,10 @@ class ViewMvcFactory(
     }
 
     fun getQuestionDetailsViewMvc(viewGroup: ViewGroup?): QuestionDetailsViewMvc {
-        return QuestionDetailsViewMvcImpl(layoutInflater, viewGroup)
+        return QuestionDetailsViewMvcImpl(layoutInflater, viewGroup, this)
+    }
+
+    fun getToolbarViewMvc(viewGroup: ViewGroup?): ToolbarViewMvc {
+        return ToolbarViewMvc(layoutInflater,viewGroup)
     }
 }

@@ -5,12 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.ProgressBar
+import androidx.appcompat.widget.Toolbar
 import com.example.mvc_kotlin.R
 import com.example.mvc_kotlin.questions.Question
 import com.example.mvc_kotlin.screens.questionslist.QuestionsListViewMvc
 import com.example.mvc_kotlin.screens.questionslist.adapter.listview.QuestionsAdapter
 import com.example.mvc_kotlin.screens.common.views.BaseObservableViewMvc
 import com.example.mvc_kotlin.screens.common.ViewMvcFactory
+import com.example.mvc_kotlin.screens.common.toolbar.ToolbarViewMvc
 
 class QuestionsListViewMvcImpl(
     layoutInflater: LayoutInflater,
@@ -22,13 +24,21 @@ class QuestionsListViewMvcImpl(
 
     private var progress: ProgressBar
 
+    private var toolbar: Toolbar
+    private var toolbarViewMvc: ToolbarViewMvc
+
 
     init {
         setRootView(layoutInflater.inflate(R.layout.layout_questions_list,viewGroup,false))
         mLstQuestions = findViewById(R.id.lst_questions)
         progress = findViewById(R.id.progress)
+        toolbar = findViewById(R.id.toolbar)
         questionsAdapter = QuestionsAdapter(context, this,viewMvcFactory)
         mLstQuestions.adapter = questionsAdapter
+
+        toolbarViewMvc = viewMvcFactory.getToolbarViewMvc(viewGroup)
+        toolbarViewMvc.setTitle("Test")
+        toolbar.addView(toolbarViewMvc.getRootView())
     }
 
     override fun  bindQuestions(questions: List<Question>) {
