@@ -48,6 +48,10 @@ class QuestionsListController(
         screensNavigator.toDialogDetails(question.id)
     }
 
+    override fun onQuestionsListClicked() {
+        // this is the questions list screen, no-op
+    }
+
     override fun onQuestionFetchFailed() {
         toastHelper.showUseCaseError()
     }

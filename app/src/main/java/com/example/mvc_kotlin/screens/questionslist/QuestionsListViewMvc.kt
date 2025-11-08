@@ -6,6 +6,7 @@ import com.example.mvc_kotlin.screens.common.views.ObservableViewMvc
 interface QuestionsListViewMvc: ObservableViewMvc<QuestionsListViewMvc.Listener> {
     interface Listener{
         fun onQuestionClicked(question: Question)
+        fun onQuestionsListClicked()
     }
 
     fun bindQuestions(questions: List<Question>)

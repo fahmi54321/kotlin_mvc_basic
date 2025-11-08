@@ -7,7 +7,7 @@ import androidx.annotation.IdRes
 abstract class BaseViewMvc: ViewMvc {
     private lateinit var rootView: View
 
-    fun setRootView(view: View) {
+    protected open fun setRootView(view: View) {
         rootView = view
     }
 
