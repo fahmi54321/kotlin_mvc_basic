@@ -1,6 +1,5 @@
 package com.example.mvc_kotlin.screens.common.navdrawer
 
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -15,7 +14,7 @@ import com.google.android.material.navigation.NavigationView
 abstract class BaseNavDrawerViewMvc<ListenerType>(
     layoutInflater: LayoutInflater,
     viewGroup: ViewGroup?
-): BaseObservableViewMvc<ListenerType>(), NavigationView.OnNavigationItemSelectedListener {
+): BaseObservableViewMvc<ListenerType>(), NavigationView.OnNavigationItemSelectedListener, NavDrawerViewMvc {
 
     private var drawerLayout: DrawerLayout
     private var frameLayout: FrameLayout
@@ -43,8 +42,16 @@ abstract class BaseNavDrawerViewMvc<ListenerType>(
         frameLayout.addView(view)
     }
 
-    protected fun openDrawer(){
+    override fun openDrawer(){
         drawerLayout.openDrawer(GravityCompat.START)
+    }
+
+    override fun closeDrawer() {
+        drawerLayout.closeDrawers()
+    }
+
+    override fun isDrawerOpen(): Boolean {
+        return drawerLayout.isDrawerOpen(GravityCompat.START)
     }
 
 }

@@ -10,6 +10,7 @@ import com.example.mvc_kotlin.screens.questionslist.QuestionsListController
 import com.example.mvc_kotlin.screens.common.toasthelper.ToastHelper
 import com.example.mvc_kotlin.screens.common.screensnavigator.ScreensNavigator
 import com.example.mvc_kotlin.screens.common.ViewMvcFactory
+import com.example.mvc_kotlin.screens.questiondetails.QuestionDetailsController
 
 class ControllerCompositionRoot(
     val compositionRoot: CompositionRoot,
@@ -54,6 +55,14 @@ class ControllerCompositionRoot(
 
     private fun getContext(): Context{
         return activity
+    }
+
+    fun getQuestionDetailsController(): QuestionDetailsController {
+        return QuestionDetailsController(
+            getFetchQuestionDetailsUseCase(),
+            getMessagesDisplayer(),
+            getScreenNavigator()
+        )
     }
 
 }

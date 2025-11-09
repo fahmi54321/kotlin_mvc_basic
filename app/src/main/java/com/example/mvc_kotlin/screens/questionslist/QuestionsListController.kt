@@ -60,4 +60,13 @@ class QuestionsListController(
         mViewMvc.bindQuestions(questions)
         mViewMvc.hideProgressIndication()
     }
+
+    fun onBackPressed(): Boolean {
+        if(mViewMvc.isDrawerOpen()){
+            mViewMvc.closeDrawer()
+            return true
+        }else{
+            return false
+        }
+    }
 }

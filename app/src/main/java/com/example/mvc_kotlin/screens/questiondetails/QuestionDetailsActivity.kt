@@ -3,21 +3,13 @@ package com.example.mvc_kotlin.screens.questiondetails
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.mvc_kotlin.R
-import com.example.mvc_kotlin.questions.FetchQuestionDetailsUseCase
-import com.example.mvc_kotlin.questions.QuestionDetails
 import com.example.mvc_kotlin.screens.common.controller.BaseActivity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 
-class QuestionDetailsActivity : BaseActivity(), FetchQuestionDetailsUseCase.Listener,
-    QuestionDetailsViewMvc.Listener {
+class QuestionDetailsActivity : BaseActivity() {
     companion object {
         const val EXTRA_QUESTION_ID = "EXTRA_QUESTION_ID"
         fun start(context: Context, questionId: String) {
@@ -27,16 +19,13 @@ class QuestionDetailsActivity : BaseActivity(), FetchQuestionDetailsUseCase.List
         }
     }
 
-    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
-
-    private lateinit var mViewMvc: QuestionDetailsViewMvc
-
-    private lateinit var fetchQuestionDetailsUseCase: FetchQuestionDetailsUseCase
+    private lateinit var questionDetailsController: QuestionDetailsController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fetchQuestionDetailsUseCase = getCompositionRoot().getFetchQuestionDetailsUseCase()
-        mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionDetailsViewMvc(null)
+        val mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionDetailsViewMvc(null)
+        questionDetailsController = getCompositionRoot().getQuestionDetailsController()
+        questionDetailsController.bindView(mViewMvc)
 
         enableEdgeToEdge()
         setContentView(mViewMvc.getRootView())
@@ -49,40 +38,22 @@ class QuestionDetailsActivity : BaseActivity(), FetchQuestionDetailsUseCase.List
 
     override fun onStart() {
         super.onStart()
-        mViewMvc.registerListener(this)
-        fetchQuestionDetailsUseCase.registerListener(this)
-        mViewMvc.showProgressIndication()
-        fetchQuestionDetails()
+        questionDetailsController.onStart(getQuestionId())
+
     }
 
     override fun onStop() {
         super.onStop()
-        mViewMvc.unregisterListener(this)
-        fetchQuestionDetailsUseCase.unregisterListener(this)
+        questionDetailsController.onStop()
     }
 
-    private fun fetchQuestionDetails(){
-        coroutineScope.launch {
-            fetchQuestionDetailsUseCase.fetchQuestionDetailsAndNotify(getQuestionId())
+    override fun onBackPressed() {
+        if(!questionDetailsController.onBackPressed()){
+            super.onBackPressed()
         }
     }
 
     private fun getQuestionId(): String{
         return intent.getStringExtra(EXTRA_QUESTION_ID)?:""
-    }
-
-
-    override fun onQuestionDetailsFetched(question: QuestionDetails) {
-        mViewMvc.hideProgressIndication()
-        mViewMvc.bindQuestion(question)
-    }
-
-    override fun onQuestionDetailsFetchFailed() {
-        mViewMvc.hideProgressIndication()
-        Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onNavigateUpClicked() {
-        onBackPressed()
     }
 }

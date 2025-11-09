@@ -25,4 +25,10 @@ class QuestionsRecyclerListActivity : BaseActivity() {
         super.onStop()
         questionsListController.onStop()
     }
+
+    override fun onBackPressed() {
+        if(!questionsListController.onBackPressed()){
+            super.onBackPressed()
+        }
+    }
 }
