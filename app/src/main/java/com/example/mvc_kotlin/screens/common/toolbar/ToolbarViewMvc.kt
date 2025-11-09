@@ -16,16 +16,26 @@ class ToolbarViewMvc(
         fun onNavigateUpClicked()
     }
 
+    interface HamburgerClickListener{
+        fun onHamburgerClicked()
+    }
+
     private var mTxtTitle: TextView
     private var mBtnBack: ImageButton
+    private var mBtnHamburger: ImageButton
     private lateinit var mNavigateUpClickListener: NavigateUpClickListener
+    private lateinit var mHamburgerClickListener: HamburgerClickListener
 
     init {
         setRootView(layoutInflater.inflate(R.layout.layout_toolbar, viewGroup,false))
         mTxtTitle = findViewById(R.id.txt_toolbar_title)
         mBtnBack = findViewById(R.id.btn_back)
+        mBtnHamburger = findViewById(R.id.btn_hamburger)
         mBtnBack.setOnClickListener {
             mNavigateUpClickListener.onNavigateUpClicked()
+        }
+        mBtnHamburger.setOnClickListener {
+            mHamburgerClickListener.onHamburgerClicked()
         }
     }
 
@@ -35,6 +45,11 @@ class ToolbarViewMvc(
     fun enableUpButtonAndListen(navigateUpClickListener: NavigateUpClickListener){
         mNavigateUpClickListener = navigateUpClickListener
         mBtnBack.visibility = View.VISIBLE
+    }
+
+    fun enableHamburgerButtonAndListen(hamburgerClickListener: HamburgerClickListener){
+        mHamburgerClickListener = hamburgerClickListener
+        mBtnHamburger.visibility = View.VISIBLE
     }
 
 }

@@ -23,7 +23,7 @@ class QuestionsRecyclerMvcImpl(
 ): BaseNavDrawerViewMvc<QuestionsListViewMvc.Listener>(
     layoutInflater,
     viewGroup
-), QuestionsRecyclerAdapter.Listener, QuestionsListViewMvc {
+), QuestionsRecyclerAdapter.Listener, QuestionsListViewMvc, ToolbarViewMvc.HamburgerClickListener {
 
     private var mRecyclerQuestions: RecyclerView
     private var mAdapter: QuestionsRecyclerAdapter
@@ -44,6 +44,8 @@ class QuestionsRecyclerMvcImpl(
         toolbarViewMvc = viewMvcFactory.getToolbarViewMvc(viewGroup)
         toolbarViewMvc.setTitle("Test")
         toolbar.addView(toolbarViewMvc.getRootView())
+
+        toolbarViewMvc.enableHamburgerButtonAndListen(this)
     }
 
 
@@ -73,5 +75,9 @@ class QuestionsRecyclerMvcImpl(
                 }
             }
         }
+    }
+
+    override fun onHamburgerClicked() {
+        openDrawer()
     }
 }

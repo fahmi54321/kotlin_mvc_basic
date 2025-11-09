@@ -1,10 +1,12 @@
 package com.example.mvc_kotlin.screens.common.navdrawer
 
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.mvc_kotlin.R
 import com.example.mvc_kotlin.screens.common.views.BaseObservableViewMvc
@@ -39,6 +41,10 @@ abstract class BaseNavDrawerViewMvc<ListenerType>(
 
     override fun setRootView(view: View) {
         frameLayout.addView(view)
+    }
+
+    protected fun openDrawer(){
+        drawerLayout.openDrawer(GravityCompat.START)
     }
 
 }

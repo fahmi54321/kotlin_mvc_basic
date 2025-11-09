@@ -7,6 +7,7 @@ abstract class BaseObservableViewMvc<ListenerType>: BaseViewMvc(), ObservableVie
 
     protected val getListeners: Set<ListenerType> = Collections.unmodifiableSet<ListenerType>(mListeners)
 
+
     override fun registerListener(listener: ListenerType) {
         mListeners.add(listener)
     }
