@@ -16,7 +16,7 @@ class QuestionsRecyclerListFragment: BaseFragment(), BackPressedListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionsRecyclerMvc(null)
+        val mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionsRecyclerMvc(container)
         questionsListController = getCompositionRoot().getQuestionsListController()
         questionsListController.bindView(mViewMvc)
         return mViewMvc.getRootView()

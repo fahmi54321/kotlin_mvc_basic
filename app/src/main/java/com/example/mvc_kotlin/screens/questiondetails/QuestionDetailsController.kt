@@ -57,7 +57,7 @@ class QuestionDetailsController(
     }
 
     override fun onNavigateUpClicked() {
-        onBackPressed()
+        screensNavigator.onBackPressed()
     }
 
     override fun onDrawerItemClicked(item: DrawerItems) {
