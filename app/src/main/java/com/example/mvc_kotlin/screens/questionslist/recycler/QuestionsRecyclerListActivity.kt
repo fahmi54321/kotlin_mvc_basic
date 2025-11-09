@@ -1,34 +1,48 @@
 package com.example.mvc_kotlin.screens.questionslist.recycler
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import com.example.mvc_kotlin.screens.questionslist.QuestionsListController
+import com.example.mvc_kotlin.R
+import com.example.mvc_kotlin.screens.common.controller.BackPressedListener
 import com.example.mvc_kotlin.screens.common.controller.BaseActivity
 
 class QuestionsRecyclerListActivity : BaseActivity() {
 
-    private lateinit var questionsListController: QuestionsListController
+    companion object {
+        fun startClearTop(context: Context) {
+            val intent = Intent(context, QuestionsRecyclerListActivity::class.java)
+            intent.setFlags(intent.getFlags() or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            context.startActivity(intent)
+        }
+    }
+
+    private lateinit var backPressedListener: BackPressedListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionsRecyclerMvc(null)
-        questionsListController = getCompositionRoot().getQuestionsListController()
-        questionsListController.bindView(mViewMvc)
-        setContentView(mViewMvc.getRootView())
-    }
+        setContentView(R.layout.layout_content_frame)
 
-    override fun onStart() {
-        super.onStart()
-        questionsListController.onStart()
-    }
+        var questionsListFragment: QuestionsRecyclerListFragment
 
-    override fun onStop() {
-        super.onStop()
-        questionsListController.onStop()
+        if(savedInstanceState == null){
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            questionsListFragment = QuestionsRecyclerListFragment()
+            fragmentTransaction.add(R.id.frame_content,questionsListFragment)
+            fragmentTransaction.commit()
+        }else{
+            questionsListFragment =
+                getSupportFragmentManager().findFragmentById(R.id.frame_content) as QuestionsRecyclerListFragment
+        }
+
+        backPressedListener = questionsListFragment
     }
 
     override fun onBackPressed() {
-        if(!questionsListController.onBackPressed()){
+        if(!backPressedListener.onBackPressed()){
             super.onBackPressed()
         }
     }
+
+
 }
