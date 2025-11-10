@@ -12,7 +12,8 @@ import com.example.mvc_kotlin.screens.common.toasthelper.ToastHelper
 import com.example.mvc_kotlin.screens.common.screensnavigator.ScreensNavigator
 import com.example.mvc_kotlin.screens.common.ViewMvcFactory
 import com.example.mvc_kotlin.screens.common.controller.BackPressDispatcher
-import com.example.mvc_kotlin.screens.common.controller.FragmentFrameWrapper
+import com.example.mvc_kotlin.screens.common.fragmentframehelper.FragmentFrameHelper
+import com.example.mvc_kotlin.screens.common.fragmentframehelper.FragmentFrameWrapper
 import com.example.mvc_kotlin.screens.questiondetails.QuestionDetailsController
 
 class ControllerCompositionRoot(
@@ -29,14 +30,21 @@ class ControllerCompositionRoot(
         return activity as FragmentFrameWrapper
     }
 
+    private fun getFragmentFrameHelper(): FragmentFrameHelper{
+        return FragmentFrameHelper(
+            activity,
+            getFragmentFrameWrapper(),
+            getFragmentManager()
+        )
+    }
+
     private fun getBackPressDispatcher(): BackPressDispatcher{
         return activity as BackPressDispatcher
     }
 
-    private fun getScreenNavigator(): ScreensNavigator {
+    fun getScreenNavigator(): ScreensNavigator {
         return ScreensNavigator(
-            getFragmentManager(),
-            getFragmentFrameWrapper()
+            getFragmentFrameHelper()
         )
     }
 
