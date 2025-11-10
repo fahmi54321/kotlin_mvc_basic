@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.mvc_kotlin.screens.common.controller.BackPressedListener
 import com.example.mvc_kotlin.screens.common.controller.BaseFragment
-import com.example.mvc_kotlin.screens.questiondetails.QuestionDetailsActivity.Companion.ARG_QUESTION_ID
 
-class QuestionDetailsFragment: BaseFragment(), BackPressedListener {
+class QuestionDetailsFragment: BaseFragment() {
     private lateinit var questionDetailsController: QuestionDetailsController
 
     companion object{
+        val ARG_QUESTION_ID: String = "ARG_QUESTION_ID"
+
         fun newInstance(questionId: String?): QuestionDetailsFragment {
             val args = Bundle()
             args.putString(ARG_QUESTION_ID, questionId)
@@ -42,10 +42,6 @@ class QuestionDetailsFragment: BaseFragment(), BackPressedListener {
     override fun onStop() {
         super.onStop()
         questionDetailsController.onStop()
-    }
-
-    override fun onBackPressed(): Boolean {
-        return questionDetailsController.onBackPressed()
     }
 
     private fun getQuestionId(): String{

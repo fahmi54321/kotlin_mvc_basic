@@ -15,16 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mvc_kotlin">
         <activity
-            android:name=".screens.questiondetails.QuestionDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".screens.questionslist.listview.QuestionsListActivity"
+            android:name=".screens.common.main.MainActivity"
             android:exported="true">
 
-        </activity>
-        <activity
-            android:name=".screens.questionslist.recycler.QuestionsRecyclerListActivity"
-            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

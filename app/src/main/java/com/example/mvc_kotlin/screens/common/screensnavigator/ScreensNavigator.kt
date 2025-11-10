@@ -1,31 +1,53 @@
 package com.example.mvc_kotlin.screens.common.screensnavigator
 
 import android.app.Activity
-import android.content.Context
-import com.example.mvc_kotlin.screens.questiondetails.QuestionDetailsActivity
-import com.example.mvc_kotlin.screens.questionslist.listview.QuestionsListActivity
-import com.example.mvc_kotlin.screens.questionslist.recycler.QuestionsRecyclerListActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import com.example.mvc_kotlin.screens.common.controller.FragmentFrameWrapper
+import com.example.mvc_kotlin.screens.questiondetails.QuestionDetailsFragment
+import com.example.mvc_kotlin.screens.questionslist.listview.QuestionsListFragment
+import com.example.mvc_kotlin.screens.questionslist.recycler.QuestionsRecyclerListFragment
 
 class ScreensNavigator(
-    val activity: Activity
+    val fragmentManager: FragmentManager,
+    val fragmentFrameWrapper: FragmentFrameWrapper
 ) {
 
-    private fun getContext(): Context{
-        return activity
-    }
-    fun toDialogDetails(id: String){
-        QuestionDetailsActivity.Companion.start(getContext(), id)
-    }
-
-    fun toQuestionsListClearTop() {
-        QuestionsListActivity.startClearTop(getContext())
+    fun toQuestionDetails(id: String) {
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.replace(
+            fragmentFrameWrapper.getFragmentFrame().id,
+            QuestionDetailsFragment.newInstance(id)
+        ).commit()
     }
 
-    fun toQuestionsRecyclerClearTop() {
-        QuestionsRecyclerListActivity.startClearTop(getContext())
+    fun toQuestionsList() {
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(
+            fragmentFrameWrapper.getFragmentFrame().id,
+            QuestionsListFragment.newInstance()
+        ).commit()
+    }
+
+    fun toQuestionsRecycler() {
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(
+            fragmentFrameWrapper.getFragmentFrame().id,
+            QuestionsRecyclerListFragment.newInstance()
+        ).commit()
     }
 
     fun onBackPressed() {
-        activity.onBackPressed()
+        if (fragmentManager.backStackEntryCount > 0) {
+            fragmentManager.popBackStack()
+        } else {
+            val context = fragmentFrameWrapper.getFragmentFrame().context
+            if (context is Activity) {
+                context.onBackPressed()
+            }
+        }
     }
 }

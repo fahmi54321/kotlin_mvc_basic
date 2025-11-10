@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.mvc_kotlin.screens.common.controller.BackPressedListener
+import androidx.fragment.app.Fragment
 import com.example.mvc_kotlin.screens.common.controller.BaseFragment
 import com.example.mvc_kotlin.screens.questionslist.QuestionsListController
 import com.example.mvc_kotlin.screens.questionslist.QuestionsListViewMvc
 
-class QuestionsListFragment: BaseFragment(), BackPressedListener {
+class QuestionsListFragment: BaseFragment() {
     private lateinit var questionsListController: QuestionsListController
 
     override fun onCreateView(
@@ -34,7 +34,9 @@ class QuestionsListFragment: BaseFragment(), BackPressedListener {
         questionsListController.onStop()
     }
 
-    override fun onBackPressed(): Boolean {
-        return questionsListController.onBackPressed()
+    companion object {
+        fun newInstance(): Fragment {
+            return QuestionsListFragment()
+        }
     }
 }
