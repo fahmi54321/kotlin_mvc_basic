@@ -2,6 +2,7 @@ package com.example.mvc_kotlin.screens.questiondetails
 
 import com.example.mvc_kotlin.questions.FetchQuestionDetailsUseCase
 import com.example.mvc_kotlin.questions.QuestionDetails
+import com.example.mvc_kotlin.screens.common.dialogs.DialogsManager
 import com.example.mvc_kotlin.screens.common.screensnavigator.ScreensNavigator
 import com.example.mvc_kotlin.screens.common.toasthelper.ToastHelper
 import kotlinx.coroutines.CoroutineScope
@@ -13,7 +14,8 @@ import kotlinx.coroutines.launch
 class QuestionDetailsController(
     val fetchQuestionDetailsUseCase: FetchQuestionDetailsUseCase,
     val toastHelper: ToastHelper,
-    val screensNavigator: ScreensNavigator
+    val screensNavigator: ScreensNavigator,
+    val dialogsManager: DialogsManager
 ): FetchQuestionDetailsUseCase.Listener,
     QuestionDetailsViewMvc.Listener {
 
@@ -52,7 +54,7 @@ class QuestionDetailsController(
 
     override fun onQuestionDetailsFetchFailed() {
         mViewMvc.hideProgressIndication()
-        toastHelper.showUseCaseError()
+        dialogsManager.showUseCaseErrorDialog("tag")
     }
 
     override fun onNavigateUpClicked() {

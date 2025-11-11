@@ -11,6 +11,7 @@ import com.example.mvc_kotlin.screens.questionslist.QuestionsListController
 import com.example.mvc_kotlin.screens.common.toasthelper.ToastHelper
 import com.example.mvc_kotlin.screens.common.screensnavigator.ScreensNavigator
 import com.example.mvc_kotlin.screens.common.ViewMvcFactory
+import com.example.mvc_kotlin.screens.common.dialogs.DialogsManager
 import com.example.mvc_kotlin.screens.common.fragmentframehelper.FragmentFrameHelper
 import com.example.mvc_kotlin.screens.common.fragmentframehelper.FragmentFrameWrapper
 import com.example.mvc_kotlin.screens.common.navdrawer.NavDrawerHelper
@@ -55,6 +56,10 @@ class ControllerCompositionRoot(
         return LayoutInflater.from(activity)
     }
 
+    private fun getDialogsManager(): DialogsManager{
+        return DialogsManager(getFragmentManager())
+    }
+
     fun getScreenNavigator(): ScreensNavigator {
         return ScreensNavigator(
             getFragmentFrameHelper()
@@ -90,6 +95,7 @@ class ControllerCompositionRoot(
             getFetchQuestionDetailsUseCase(),
             getToastHelper(),
             getScreenNavigator(),
+            getDialogsManager()
         )
     }
 
