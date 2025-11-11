@@ -2,7 +2,6 @@ package com.example.mvc_kotlin.screens.common.navdrawer
 
 import android.view.LayoutInflater
 import android.view.MenuItem
-import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.view.GravityCompat
@@ -11,10 +10,10 @@ import com.example.mvc_kotlin.R
 import com.example.mvc_kotlin.screens.common.views.BaseObservableViewMvc
 import com.google.android.material.navigation.NavigationView
 
-abstract class BaseNavDrawerViewMvc<ListenerType>(
+class NavDrawerViewMvcImpl(
     layoutInflater: LayoutInflater,
     viewGroup: ViewGroup?
-): BaseObservableViewMvc<ListenerType>(), NavigationView.OnNavigationItemSelectedListener, NavDrawerViewMvc {
+): BaseObservableViewMvc<NavDrawerViewMvc.Listener>(), NavigationView.OnNavigationItemSelectedListener, NavDrawerViewMvc {
 
     private var drawerLayout: DrawerLayout
     private var frameLayout: FrameLayout
@@ -22,15 +21,15 @@ abstract class BaseNavDrawerViewMvc<ListenerType>(
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         drawerLayout.closeDrawers()
         if(menuItem.itemId == R.id.drawer_menu_latest_questions){
-            onDrawerItemClicked(DrawerItems.QUESTIONS_LIST)
+            for (listener in getListeners){
+                listener.onQuestionListClicked()
+            }
         }
         return false
     }
 
-    abstract fun onDrawerItemClicked(questionsList: DrawerItems)
-
     init {
-        super.setRootView(layoutInflater.inflate(R.layout.layout_drawer, viewGroup, false))
+        setRootView(layoutInflater.inflate(R.layout.layout_drawer, viewGroup, false))
         drawerLayout = findViewById(R.id.drawer_layout)
         frameLayout = findViewById(R.id.frame_content)
         navigationView = findViewById(R.id.nav_view)
@@ -38,9 +37,6 @@ abstract class BaseNavDrawerViewMvc<ListenerType>(
         navigationView.setNavigationItemSelectedListener(this)
     }
 
-    override fun setRootView(view: View) {
-        frameLayout.addView(view)
-    }
 
     override fun openDrawer(){
         drawerLayout.openDrawer(GravityCompat.START)
@@ -48,6 +44,10 @@ abstract class BaseNavDrawerViewMvc<ListenerType>(
 
     override fun closeDrawer() {
         drawerLayout.closeDrawers()
+    }
+
+    override fun getFragmentFrame(): FrameLayout {
+        return frameLayout
     }
 
     override fun isDrawerOpen(): Boolean {

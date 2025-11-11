@@ -2,9 +2,6 @@ package com.example.mvc_kotlin.screens.questiondetails
 
 import com.example.mvc_kotlin.questions.FetchQuestionDetailsUseCase
 import com.example.mvc_kotlin.questions.QuestionDetails
-import com.example.mvc_kotlin.screens.common.controller.BackPressDispatcher
-import com.example.mvc_kotlin.screens.common.controller.BackPressedListener
-import com.example.mvc_kotlin.screens.common.navdrawer.DrawerItems
 import com.example.mvc_kotlin.screens.common.screensnavigator.ScreensNavigator
 import com.example.mvc_kotlin.screens.common.toasthelper.ToastHelper
 import kotlinx.coroutines.CoroutineScope
@@ -16,10 +13,9 @@ import kotlinx.coroutines.launch
 class QuestionDetailsController(
     val fetchQuestionDetailsUseCase: FetchQuestionDetailsUseCase,
     val toastHelper: ToastHelper,
-    val screensNavigator: ScreensNavigator,
-    val backPressDispatcher: BackPressDispatcher
+    val screensNavigator: ScreensNavigator
 ): FetchQuestionDetailsUseCase.Listener,
-    QuestionDetailsViewMvc.Listener, BackPressedListener {
+    QuestionDetailsViewMvc.Listener {
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
@@ -27,14 +23,12 @@ class QuestionDetailsController(
 
     fun onStart(questionId: String){
         mViewMvc.registerListener(this)
-        backPressDispatcher.registenerListener(this)
         fetchQuestionDetailsUseCase.registerListener(this)
         fetchQuestionDetails(questionId)
     }
 
     fun onStop(){
         mViewMvc.unregisterListener(this)
-        backPressDispatcher.unregistenerListener(this)
         fetchQuestionDetailsUseCase.unregisterListener(this)
         coroutineScope.coroutineContext.cancelChildren()
     }
@@ -63,20 +57,5 @@ class QuestionDetailsController(
 
     override fun onNavigateUpClicked() {
         screensNavigator.onBackPressed()
-    }
-
-    override fun onDrawerItemClicked(item: DrawerItems) {
-        when (item) {
-            DrawerItems.QUESTIONS_LIST -> screensNavigator.toQuestionsList()
-        }
-    }
-
-    override fun onBackPressed(): Boolean {
-        if(mViewMvc.isDrawerOpen()){
-            mViewMvc.closeDrawer()
-            return true
-        }else{
-            return false
-        }
     }
 }

@@ -2,51 +2,68 @@ package com.example.mvc_kotlin.screens.common.main
 
 import android.os.Bundle
 import android.widget.FrameLayout
-import com.example.mvc_kotlin.R
-import com.example.mvc_kotlin.screens.common.controller.BackPressDispatcher
-import com.example.mvc_kotlin.screens.common.controller.BackPressedListener
 import com.example.mvc_kotlin.screens.common.controller.BaseActivity
 import com.example.mvc_kotlin.screens.common.fragmentframehelper.FragmentFrameWrapper
+import com.example.mvc_kotlin.screens.common.navdrawer.NavDrawerHelper
+import com.example.mvc_kotlin.screens.common.navdrawer.NavDrawerViewMvc
 import com.example.mvc_kotlin.screens.common.screensnavigator.ScreensNavigator
 
-class MainActivity : BaseActivity(), BackPressDispatcher, FragmentFrameWrapper {
+class MainActivity : BaseActivity(),
+    FragmentFrameWrapper,
+    NavDrawerViewMvc.Listener,
+    NavDrawerHelper {
 
-    private val backPressedListeners: MutableSet<BackPressedListener> = HashSet()
     private lateinit var screensNavigator: ScreensNavigator
+
+    private lateinit var mViewMvc: NavDrawerViewMvc
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.layout_content_frame)
 
         screensNavigator = getCompositionRoot().getScreenNavigator()
+        mViewMvc = getCompositionRoot().getViewMvcFactory().getNavDrawerViewMvc(null)
+        setContentView(mViewMvc.getRootView())
 
         if(savedInstanceState == null){
             screensNavigator.toQuestionsList()
         }
     }
 
-    override fun onBackPressed() {
-        var isBackPressConsumedByAndListener: Boolean = false
-        for(listener in backPressedListeners){
-            if(listener.onBackPressed()){
-                isBackPressConsumedByAndListener = true
-            }
-        }
+    override fun onStart() {
+        super.onStart()
+        mViewMvc.registerListener(this)
+    }
 
-        if(!isBackPressConsumedByAndListener){
+    override fun onStop() {
+        super.onStop()
+        mViewMvc.unregisterListener(this)
+    }
+
+    override fun onBackPressed() {
+        if(isDrawerOpen()){
+            closeDrawer()
+        }else{
             super.onBackPressed()
         }
     }
 
-    override fun registenerListener(listener: BackPressedListener) {
-        backPressedListeners.add(listener)
-    }
-
-    override fun unregistenerListener(listener: BackPressedListener) {
-        backPressedListeners.remove(listener)
-    }
-
     override fun getFragmentFrame(): FrameLayout {
-        return findViewById(R.id.frame_content)
+        return mViewMvc.getFragmentFrame()
+    }
+
+    override fun onQuestionListClicked() {
+        screensNavigator.toQuestionsList()
+    }
+
+    override fun openDrawer() {
+        mViewMvc.openDrawer()
+    }
+
+    override fun closeDrawer() {
+        mViewMvc.closeDrawer()
+    }
+
+    override fun isDrawerOpen(): Boolean {
+        return mViewMvc.isDrawerOpen()
     }
 }

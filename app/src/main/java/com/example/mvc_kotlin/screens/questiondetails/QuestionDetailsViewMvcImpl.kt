@@ -10,7 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import com.example.mvc_kotlin.R
 import com.example.mvc_kotlin.questions.QuestionDetails
 import com.example.mvc_kotlin.screens.common.ViewMvcFactory
-import com.example.mvc_kotlin.screens.common.navdrawer.BaseNavDrawerViewMvc
+import com.example.mvc_kotlin.screens.common.navdrawer.NavDrawerViewMvcImpl
 import com.example.mvc_kotlin.screens.common.navdrawer.DrawerItems
 import com.example.mvc_kotlin.screens.common.toolbar.ToolbarViewMvc
 import com.example.mvc_kotlin.screens.common.views.BaseObservableViewMvc
@@ -19,10 +19,7 @@ class QuestionDetailsViewMvcImpl(
     layoutInflater: LayoutInflater,
     viewGroup: ViewGroup?,
     viewMvcFactory: ViewMvcFactory
-): BaseNavDrawerViewMvc<QuestionDetailsViewMvc.Listener>(
-    layoutInflater,
-    viewGroup
-), QuestionDetailsViewMvc,
+): BaseObservableViewMvc<QuestionDetailsViewMvc.Listener>(), QuestionDetailsViewMvc,
     ToolbarViewMvc.NavigateUpClickListener {
 
     private var mTxtQuestionTitle: TextView
@@ -61,12 +58,6 @@ class QuestionDetailsViewMvcImpl(
     override fun onNavigateUpClicked() {
         for(listener in getListeners){
             listener.onNavigateUpClicked()
-        }
-    }
-
-    override fun onDrawerItemClicked(item: DrawerItems) {
-        for(listener in getListeners){
-            listener.onDrawerItemClicked(item)
         }
     }
 }

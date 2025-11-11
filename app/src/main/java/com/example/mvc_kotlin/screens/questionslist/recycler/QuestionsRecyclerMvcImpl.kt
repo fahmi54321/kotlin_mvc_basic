@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mvc_kotlin.R
 import com.example.mvc_kotlin.questions.Question
 import com.example.mvc_kotlin.screens.common.ViewMvcFactory
-import com.example.mvc_kotlin.screens.common.navdrawer.BaseNavDrawerViewMvc
-import com.example.mvc_kotlin.screens.common.navdrawer.DrawerItems
+import com.example.mvc_kotlin.screens.common.navdrawer.NavDrawerHelper
 import com.example.mvc_kotlin.screens.common.toolbar.ToolbarViewMvc
+import com.example.mvc_kotlin.screens.common.views.BaseObservableViewMvc
 import com.example.mvc_kotlin.screens.questionslist.QuestionsListViewMvc
 import com.example.mvc_kotlin.screens.questionslist.adapter.recycler.QuestionsRecyclerAdapter
 
@@ -20,10 +20,8 @@ class QuestionsRecyclerMvcImpl(
     layoutInflater: LayoutInflater,
     viewGroup: ViewGroup?,
     viewMvcFactory: ViewMvcFactory,
-): BaseNavDrawerViewMvc<QuestionsListViewMvc.Listener>(
-    layoutInflater,
-    viewGroup
-), QuestionsRecyclerAdapter.Listener, QuestionsListViewMvc, ToolbarViewMvc.HamburgerClickListener {
+    private val navDrawerHelper: NavDrawerHelper
+): BaseObservableViewMvc<QuestionsListViewMvc.Listener>(), QuestionsRecyclerAdapter.Listener, QuestionsListViewMvc, ToolbarViewMvc.HamburgerClickListener {
 
     private var mRecyclerQuestions: RecyclerView
     private var mAdapter: QuestionsRecyclerAdapter
@@ -67,17 +65,7 @@ class QuestionsRecyclerMvcImpl(
         progress.visibility = View.GONE
     }
 
-    override fun onDrawerItemClicked(item: DrawerItems) {
-        for (listener in getListeners) {
-            when (item) {
-                DrawerItems.QUESTIONS_LIST -> {
-                    listener.onQuestionsListClicked()
-                }
-            }
-        }
-    }
-
     override fun onHamburgerClicked() {
-        openDrawer()
+        navDrawerHelper.openDrawer()
     }
 }

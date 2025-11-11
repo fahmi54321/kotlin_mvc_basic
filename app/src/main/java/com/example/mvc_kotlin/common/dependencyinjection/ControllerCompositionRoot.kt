@@ -11,9 +11,9 @@ import com.example.mvc_kotlin.screens.questionslist.QuestionsListController
 import com.example.mvc_kotlin.screens.common.toasthelper.ToastHelper
 import com.example.mvc_kotlin.screens.common.screensnavigator.ScreensNavigator
 import com.example.mvc_kotlin.screens.common.ViewMvcFactory
-import com.example.mvc_kotlin.screens.common.controller.BackPressDispatcher
 import com.example.mvc_kotlin.screens.common.fragmentframehelper.FragmentFrameHelper
 import com.example.mvc_kotlin.screens.common.fragmentframehelper.FragmentFrameWrapper
+import com.example.mvc_kotlin.screens.common.navdrawer.NavDrawerHelper
 import com.example.mvc_kotlin.screens.questiondetails.QuestionDetailsController
 
 class ControllerCompositionRoot(
@@ -38,14 +38,8 @@ class ControllerCompositionRoot(
         )
     }
 
-    private fun getBackPressDispatcher(): BackPressDispatcher{
-        return activity as BackPressDispatcher
-    }
-
-    fun getScreenNavigator(): ScreensNavigator {
-        return ScreensNavigator(
-            getFragmentFrameHelper()
-        )
+    private fun getNavDrawerHelper (): NavDrawerHelper{
+        return activity as NavDrawerHelper
     }
 
     private fun getToastHelper(): ToastHelper{
@@ -61,12 +55,18 @@ class ControllerCompositionRoot(
         return LayoutInflater.from(activity)
     }
 
+    fun getScreenNavigator(): ScreensNavigator {
+        return ScreensNavigator(
+            getFragmentFrameHelper()
+        )
+    }
+
     fun getStackoveflowApi(): StackoverflowApi {
         return compositionRoot.getStackoveflowApi()
     }
 
     fun getViewMvcFactory(): ViewMvcFactory{
-        return ViewMvcFactory(getLayoutInflater())
+        return ViewMvcFactory(getLayoutInflater(), getNavDrawerHelper())
     }
 
     fun getFetchQuestionDetailsUseCase(): FetchQuestionDetailsUseCase {
@@ -82,7 +82,6 @@ class ControllerCompositionRoot(
             getFetchQuestionListUseCase(),
             getToastHelper(),
             getScreenNavigator(),
-            getBackPressDispatcher()
         )
     }
 
@@ -91,7 +90,6 @@ class ControllerCompositionRoot(
             getFetchQuestionDetailsUseCase(),
             getToastHelper(),
             getScreenNavigator(),
-            getBackPressDispatcher()
         )
     }
 

@@ -11,18 +11,16 @@ import com.example.mvc_kotlin.questions.Question
 import com.example.mvc_kotlin.screens.questionslist.QuestionsListViewMvc
 import com.example.mvc_kotlin.screens.questionslist.adapter.listview.QuestionsAdapter
 import com.example.mvc_kotlin.screens.common.ViewMvcFactory
-import com.example.mvc_kotlin.screens.common.navdrawer.BaseNavDrawerViewMvc
-import com.example.mvc_kotlin.screens.common.navdrawer.DrawerItems
+import com.example.mvc_kotlin.screens.common.navdrawer.NavDrawerHelper
 import com.example.mvc_kotlin.screens.common.toolbar.ToolbarViewMvc
+import com.example.mvc_kotlin.screens.common.views.BaseObservableViewMvc
 
 class QuestionsListViewMvcImpl(
     layoutInflater: LayoutInflater,
     viewGroup: ViewGroup?,
-    viewMvcFactory: ViewMvcFactory
-) : BaseNavDrawerViewMvc<QuestionsListViewMvc.Listener>(
-    layoutInflater,
-    viewGroup
-), QuestionsAdapter.OnQuestionClickListener, QuestionsListViewMvc,
+    viewMvcFactory: ViewMvcFactory,
+    private val navDrawerHelper: NavDrawerHelper
+) : BaseObservableViewMvc<QuestionsListViewMvc.Listener>(), QuestionsAdapter.OnQuestionClickListener, QuestionsListViewMvc,
     ToolbarViewMvc.HamburgerClickListener {
     private var mLstQuestions: ListView
     private var questionsAdapter: QuestionsAdapter
@@ -68,17 +66,7 @@ class QuestionsListViewMvcImpl(
         progress.visibility = View.GONE
     }
 
-    override fun onDrawerItemClicked(item: DrawerItems) {
-        for (listener in getListeners) {
-            when (item) {
-                DrawerItems.QUESTIONS_LIST -> {
-                    listener.onQuestionsListClicked()
-                }
-            }
-        }
-    }
-
     override fun onHamburgerClicked() {
-        openDrawer()
+        navDrawerHelper.openDrawer()
     }
 }
