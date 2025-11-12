@@ -1,7 +1,6 @@
 package com.example.mvc_kotlin.screens.common.dialogs
 
 import androidx.fragment.app.FragmentManager
-import com.example.mvc_kotlin.screens.common.dialogs.infodialog.InfoDialog
 import com.example.mvc_kotlin.screens.common.dialogs.promptdialog.PromptDialog
 
 class DialogsManager(
@@ -23,5 +22,14 @@ class DialogsManager(
             "Close"
         )
         promptDialog.show(fragmentManager, tag)
+    }
+
+    fun getShownDialogTag(): String? {
+        for(fragment in fragmentManager.fragments){
+            if(fragment is BaseDialog){
+                return fragment.tag
+            }
+        }
+        return null
     }
 }

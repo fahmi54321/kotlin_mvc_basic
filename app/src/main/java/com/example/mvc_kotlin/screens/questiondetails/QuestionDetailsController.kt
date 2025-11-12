@@ -28,6 +28,10 @@ class QuestionDetailsController(
 
     private var questionId: String = ""
 
+    companion object{
+        val DIALOG_ID_NETWORK_ERROR: String = "DIALOG_ID_NETWORK_ERROR"
+    }
+
     fun setQuestionId(id: String){
         questionId = id
     }
@@ -36,7 +40,9 @@ class QuestionDetailsController(
         mViewMvc.registerListener(this)
         fetchQuestionDetailsUseCase.registerListener(this)
         dialogsEventBus.registerListener(this)
-        fetchQuestionDetails(questionId)
+        if(DIALOG_ID_NETWORK_ERROR != dialogsManager.getShownDialogTag()){
+            fetchQuestionDetails(questionId)
+        }
     }
 
     fun onStop(){
