@@ -88,6 +88,8 @@ class ControllerCompositionRoot(
             getFetchQuestionListUseCase(),
             getToastHelper(),
             getScreenNavigator(),
+            getDialogsManager(),
+            getDialogsEventBus()
         )
     }
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.mvc_kotlin.screens.common.controller.BaseFragment
+import com.example.mvc_kotlin.screens.questiondetails.QuestionDetailsController.Companion.SAVED_STATE_SCREEN_STATE
 
 class QuestionDetailsFragment: BaseFragment() {
     private lateinit var questionDetailsController: QuestionDetailsController
@@ -30,6 +31,10 @@ class QuestionDetailsFragment: BaseFragment() {
         questionDetailsController = getCompositionRoot().getQuestionDetailsController()
         questionDetailsController.bindView(mViewMvc)
 
+        if(savedInstanceState != null){
+            restoreControllerState(savedInstanceState)
+        }
+
         return mViewMvc.getRootView()
     }
 
@@ -45,7 +50,18 @@ class QuestionDetailsFragment: BaseFragment() {
         questionDetailsController.onStop()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putSerializable(SAVED_STATE_SCREEN_STATE,questionDetailsController.getSavedState())
+    }
+
     private fun getQuestionId(): String{
         return arguments?.getString(ARG_QUESTION_ID,"")?:""
+    }
+
+    private fun restoreControllerState(savedInstanceState: Bundle?){
+        questionDetailsController.restoreSavedState(
+            savedInstanceState?.getSerializable(SAVED_STATE_SCREEN_STATE) as QuestionDetailsController.Companion.SavedState
+        )
     }
 }
