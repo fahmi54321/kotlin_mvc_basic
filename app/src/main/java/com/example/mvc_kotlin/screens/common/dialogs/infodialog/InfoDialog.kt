@@ -13,7 +13,7 @@ open class InfoDialog : BaseDialog() {
     private lateinit var mTxtMessage: TextView
     private lateinit var mBtnPositive: AppCompatButton
 
-    public override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_info)
 
@@ -25,7 +25,7 @@ open class InfoDialog : BaseDialog() {
         mTxtMessage.setText(getArguments()?.getString(ARG_MESSAGE))
         mBtnPositive.setText(getArguments()?.getString(ARG_BUTTON_CAPTION))
 
-        mBtnPositive.setOnClickListener { v: View? -> onButtonClicked() }
+        mBtnPositive.setOnClickListener { onButtonClicked() }
 
         return dialog
     }

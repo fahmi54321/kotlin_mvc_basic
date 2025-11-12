@@ -11,6 +11,7 @@ import com.example.mvc_kotlin.screens.questionslist.QuestionsListController
 import com.example.mvc_kotlin.screens.common.toasthelper.ToastHelper
 import com.example.mvc_kotlin.screens.common.screensnavigator.ScreensNavigator
 import com.example.mvc_kotlin.screens.common.ViewMvcFactory
+import com.example.mvc_kotlin.screens.common.dialogs.DialogsEventBus
 import com.example.mvc_kotlin.screens.common.dialogs.DialogsManager
 import com.example.mvc_kotlin.screens.common.fragmentframehelper.FragmentFrameHelper
 import com.example.mvc_kotlin.screens.common.fragmentframehelper.FragmentFrameWrapper
@@ -95,8 +96,13 @@ class ControllerCompositionRoot(
             getFetchQuestionDetailsUseCase(),
             getToastHelper(),
             getScreenNavigator(),
-            getDialogsManager()
+            getDialogsManager(),
+            getDialogsEventBus()
         )
+    }
+
+    fun getDialogsEventBus(): DialogsEventBus {
+        return compositionRoot.getDialogsEventBus()
     }
 
 }

@@ -35,7 +35,8 @@ class QuestionDetailsFragment: BaseFragment() {
 
     override fun onStart() {
         super.onStart()
-        questionDetailsController.onStart(getQuestionId())
+        questionDetailsController.setQuestionId(getQuestionId())
+        questionDetailsController.onStart()
 
     }
 
