@@ -7,7 +7,7 @@ import com.example.mvc_kotlin.screens.common.dialogs.promptdialog.PromptDialog
 class DialogsManager(
     val fragmentManager: FragmentManager
 ) {
-    fun showUseCaseErrorDialog(tag: String){
+    fun showUseCaseErrorDialog(tag: String?){
 //        val infoDialog = InfoDialog.newInfoDialog(
 //            "Opps",
 //            "Error",

@@ -65,7 +65,7 @@ class QuestionDetailsController(
 
     override fun onQuestionDetailsFetchFailed() {
         mViewMvc.hideProgressIndication()
-        dialogsManager.showUseCaseErrorDialog("tag")
+        dialogsManager.showUseCaseErrorDialog(null)
     }
 
     override fun onNavigateUpClicked() {
