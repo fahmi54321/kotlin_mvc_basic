@@ -20,22 +20,32 @@ class ToolbarViewMvc(
         fun onHamburgerClicked()
     }
 
+    interface LocationRequestListener{
+        fun onLocationRequestClicked()
+    }
+
     private var mTxtTitle: TextView
     private var mBtnBack: ImageButton
     private var mBtnHamburger: ImageButton
+    private var mBtnLocation: ImageButton
     private lateinit var mNavigateUpClickListener: NavigateUpClickListener
     private lateinit var mHamburgerClickListener: HamburgerClickListener
+    private lateinit var mLocationRequestListener: LocationRequestListener
 
     init {
         setRootView(layoutInflater.inflate(R.layout.layout_toolbar, viewGroup,false))
         mTxtTitle = findViewById(R.id.txt_toolbar_title)
         mBtnBack = findViewById(R.id.btn_back)
         mBtnHamburger = findViewById(R.id.btn_hamburger)
+        mBtnLocation = findViewById(R.id.btn_location)
         mBtnBack.setOnClickListener {
             mNavigateUpClickListener.onNavigateUpClicked()
         }
         mBtnHamburger.setOnClickListener {
             mHamburgerClickListener.onHamburgerClicked()
+        }
+        mBtnLocation.setOnClickListener {
+            mLocationRequestListener.onLocationRequestClicked()
         }
     }
 
@@ -50,6 +60,11 @@ class ToolbarViewMvc(
     fun enableHamburgerButtonAndListen(hamburgerClickListener: HamburgerClickListener){
         mHamburgerClickListener = hamburgerClickListener
         mBtnHamburger.visibility = View.VISIBLE
+    }
+
+    fun enableLocationRequestButtonAndListen(locationRequestListener: LocationRequestListener){
+        mLocationRequestListener = locationRequestListener
+        mBtnLocation.visibility = View.VISIBLE
     }
 
 }

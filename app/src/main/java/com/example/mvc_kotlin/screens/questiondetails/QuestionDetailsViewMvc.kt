@@ -7,6 +7,7 @@ interface QuestionDetailsViewMvc: ObservableViewMvc<QuestionDetailsViewMvc.Liste
 
     interface Listener{
         fun onNavigateUpClicked()
+        fun onLocationRequestClicked()
     }
     fun bindQuestion(question: QuestionDetails)
     fun showProgressIndication()

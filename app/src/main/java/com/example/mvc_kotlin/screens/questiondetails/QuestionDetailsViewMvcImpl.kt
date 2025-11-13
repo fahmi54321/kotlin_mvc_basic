@@ -20,7 +20,7 @@ class QuestionDetailsViewMvcImpl(
     viewGroup: ViewGroup?,
     viewMvcFactory: ViewMvcFactory
 ): BaseObservableViewMvc<QuestionDetailsViewMvc.Listener>(), QuestionDetailsViewMvc,
-    ToolbarViewMvc.NavigateUpClickListener {
+    ToolbarViewMvc.NavigateUpClickListener, ToolbarViewMvc.LocationRequestListener {
 
     private var mTxtQuestionTitle: TextView
     private var mTxtQuestionBody: TextView
@@ -39,6 +39,7 @@ class QuestionDetailsViewMvcImpl(
         toolbarViewMvc = viewMvcFactory.getToolbarViewMvc(viewGroup)
         toolbarViewMvc.setTitle("Details")
         toolbarViewMvc.enableUpButtonAndListen(this)
+        toolbarViewMvc.enableLocationRequestButtonAndListen(this)
         toolbar.addView(toolbarViewMvc.getRootView())
     }
 
@@ -58,6 +59,12 @@ class QuestionDetailsViewMvcImpl(
     override fun onNavigateUpClicked() {
         for(listener in getListeners){
             listener.onNavigateUpClicked()
+        }
+    }
+
+    override fun onLocationRequestClicked() {
+        for(listener in getListeners){
+            listener.onLocationRequestClicked()
         }
     }
 }

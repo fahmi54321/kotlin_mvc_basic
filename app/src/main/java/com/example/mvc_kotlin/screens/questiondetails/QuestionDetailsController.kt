@@ -99,6 +99,10 @@ class QuestionDetailsController(
         screensNavigator.onBackPressed()
     }
 
+    override fun onLocationRequestClicked() {
+
+    }
+
     override fun onDialogEvent(event: Any) {
         if (event is PromptDialogEvent) {
             when (event.clickedButton) {

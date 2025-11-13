@@ -27,8 +27,16 @@
             android:src="@drawable/outline_accessible_menu_24"
             android:visibility="gone"/>
 
-    </FrameLayout>
+        <ImageButton
+            android:id="@+id/btn_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:src="@drawable/outline_add_location_24"
+            android:layout_gravity="end"
+            android:visibility="gone"/>
 
+    </FrameLayout>
 
     <TextView
         android:id="@+id/txt_toolbar_title"
