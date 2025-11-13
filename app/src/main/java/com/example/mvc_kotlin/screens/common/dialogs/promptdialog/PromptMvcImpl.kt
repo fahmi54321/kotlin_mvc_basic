@@ -12,10 +12,10 @@ class PromptMvcImpl(
     viewGroup: ViewGroup?,
 ) : BaseObservableViewMvc<PromptViewMvc.Listener>(), PromptViewMvc {
 
-    private lateinit var mTxtTitle: TextView
-    private lateinit var mTxtMessage: TextView
-    private lateinit var mBtnPositive: AppCompatButton
-    private lateinit var mBtnNegative: AppCompatButton
+    private var mTxtTitle: TextView
+    private var mTxtMessage: TextView
+    private var mBtnPositive: AppCompatButton
+    private var mBtnNegative: AppCompatButton
 
 
     init {

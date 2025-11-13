@@ -12,9 +12,9 @@ class InfoMvcImpl(
     viewGroup: ViewGroup?,
 ) : BaseObservableViewMvc<InfoViewMvc.Listener>(), InfoViewMvc {
 
-    private lateinit var mTxtTitle: TextView
-    private lateinit var mTxtMessage: TextView
-    private lateinit var mBtnPositive: AppCompatButton
+    private var mTxtTitle: TextView
+    private var mTxtMessage: TextView
+    private var mBtnPositive: AppCompatButton
 
 
     init {
