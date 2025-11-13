@@ -2,19 +2,12 @@ package com.example.mvc_kotlin.screens.common.dialogs.promptdialog
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatButton
-import com.example.mvc_kotlin.R
 import com.example.mvc_kotlin.screens.common.dialogs.BaseDialog
 import com.example.mvc_kotlin.screens.common.dialogs.DialogsEventBus
 
-open class PromptDialog : BaseDialog() {
-    private lateinit var mTxtTitle: TextView
-    private lateinit var mTxtMessage: TextView
-    private lateinit var mBtnPositive: AppCompatButton
-    private lateinit var mBtnNegative: AppCompatButton
+open class PromptDialog : BaseDialog(), PromptViewMvc.Listener {
     private lateinit var mDialogsEventBus: DialogsEventBus
+    private lateinit var mViewMvc: PromptViewMvc
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,30 +16,33 @@ open class PromptDialog : BaseDialog() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = Dialog(requireContext())
-        dialog.setContentView(R.layout.dialog_prompt)
+        mViewMvc = getCompositionRoot().getViewMvcFactory().getPromptViewMvc(null)
+        dialog.setContentView(mViewMvc.getRootView())
 
-        mTxtTitle = dialog.findViewById(R.id.txt_title)
-        mTxtMessage = dialog.findViewById(R.id.txt_message)
-        mBtnPositive = dialog.findViewById(R.id.btn_positive)
-        mBtnNegative = dialog.findViewById(R.id.btn_negative)
-
-        mTxtTitle.setText(getArguments()?.getString(ARG_TITLE))
-        mTxtMessage.setText(getArguments()?.getString(ARG_MESSAGE))
-        mBtnPositive.setText(getArguments()?.getString(ARG_POSITIVE_BUTTON_CAPTION))
-        mBtnNegative.setText(getArguments()?.getString(ARG_NEGATIVE_BUTTON_CAPTION))
-
-        mBtnPositive.setOnClickListener { onPositiveButtonClicked() }
-        mBtnNegative.setOnClickListener { onNegativeButtonClicked() }
+        mViewMvc.setTitle(getArguments()?.getString(ARG_TITLE)?:"")
+        mViewMvc.setMessage(getArguments()?.getString(ARG_MESSAGE)?:"")
+        mViewMvc.setPositiveButtonCaption(getArguments()?.getString(ARG_POSITIVE_BUTTON_CAPTION)?:"")
+        mViewMvc.setNegativeButtonCaption(getArguments()?.getString(ARG_NEGATIVE_BUTTON_CAPTION)?:"")
 
         return dialog
     }
 
-    protected fun onPositiveButtonClicked() {
+    override fun onStart() {
+        super.onStart()
+        mViewMvc.registerListener(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mViewMvc.unregisterListener(this)
+    }
+
+    override fun onPositiveButtonClicked() {
         dismiss()
         mDialogsEventBus.postEvent(PromptDialogEvent(PromptDialogEvent.Button.POSITIVE))
     }
 
-    protected fun onNegativeButtonClicked() {
+    override fun onNegativeButtonClicked() {
         dismiss()
         mDialogsEventBus.postEvent(PromptDialogEvent(PromptDialogEvent.Button.NEGATIVE))
     }

@@ -2,35 +2,35 @@ package com.example.mvc_kotlin.screens.common.dialogs.infodialog
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatButton
-import com.example.mvc_kotlin.R
 import com.example.mvc_kotlin.screens.common.dialogs.BaseDialog
 
-open class InfoDialog : BaseDialog() {
-    private lateinit var mTxtTitle: TextView
-    private lateinit var mTxtMessage: TextView
-    private lateinit var mBtnPositive: AppCompatButton
+open class InfoDialog : BaseDialog(), InfoViewMvc.Listener {
+
+    private lateinit var mViewMvc: InfoViewMvc
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = Dialog(requireContext())
-        dialog.setContentView(R.layout.dialog_info)
+        mViewMvc = getCompositionRoot().getViewMvcFactory().getInfoViewMvc(null)
+        dialog.setContentView(mViewMvc.getRootView())
 
-        mTxtTitle = dialog.findViewById(R.id.txt_title)
-        mTxtMessage = dialog.findViewById(R.id.txt_message)
-        mBtnPositive = dialog.findViewById(R.id.btn_positive)
-
-        mTxtTitle.setText(getArguments()?.getString(ARG_TITLE))
-        mTxtMessage.setText(getArguments()?.getString(ARG_MESSAGE))
-        mBtnPositive.setText(getArguments()?.getString(ARG_BUTTON_CAPTION))
-
-        mBtnPositive.setOnClickListener { onButtonClicked() }
+        mViewMvc.setTitle(getArguments()?.getString(ARG_TITLE)?:"")
+        mViewMvc.setMessage(getArguments()?.getString(ARG_MESSAGE)?:"")
+        mViewMvc.setButtonPositiveCaption(getArguments()?.getString(ARG_BUTTON_CAPTION)?:"")
 
         return dialog
     }
 
-    protected fun onButtonClicked() {
+    override fun onStart() {
+        super.onStart()
+        mViewMvc.registerListener(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mViewMvc.unregisterListener(this)
+    }
+
+    override fun onButtonClicked() {
         dismiss()
     }
 

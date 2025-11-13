@@ -2,6 +2,10 @@ package com.example.mvc_kotlin.screens.common
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.example.mvc_kotlin.screens.common.dialogs.infodialog.InfoMvcImpl
+import com.example.mvc_kotlin.screens.common.dialogs.infodialog.InfoViewMvc
+import com.example.mvc_kotlin.screens.common.dialogs.promptdialog.PromptMvcImpl
+import com.example.mvc_kotlin.screens.common.dialogs.promptdialog.PromptViewMvc
 import com.example.mvc_kotlin.screens.common.navdrawer.NavDrawerHelper
 import com.example.mvc_kotlin.screens.common.navdrawer.NavDrawerViewMvc
 import com.example.mvc_kotlin.screens.common.navdrawer.NavDrawerViewMvcImpl
@@ -40,5 +44,19 @@ class ViewMvcFactory(
 
     fun getNavDrawerViewMvc(viewGroup: ViewGroup?): NavDrawerViewMvc {
         return NavDrawerViewMvcImpl(layoutInflater,viewGroup)
+    }
+
+    fun getPromptViewMvc(viewGroup: ViewGroup?): PromptViewMvc {
+        return PromptMvcImpl(
+            layoutInflater,
+            viewGroup
+        )
+    }
+
+    fun getInfoViewMvc(viewGroup: ViewGroup?): InfoViewMvc {
+        return InfoMvcImpl(
+            layoutInflater,
+            viewGroup
+        )
     }
 }
